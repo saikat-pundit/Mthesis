@@ -86,17 +86,44 @@ def build_historical_csv():
     # Convert to DataFrame
     df = pd.DataFrame(all_data)
     
+    # DEBUG: Check what we have
+    print(f"\n🔍 Raw data shape: {df.shape}")
+    print(f"🔍 Unique tenures: {df['tenure'].unique()}")
+    
     # Pivot to wide format
     df_pivot = df.pivot(index="date", columns="tenure", values="value").reset_index()
+    
+    # DEBUG: Check pivot result
+    print(f"🔍 Pivot columns: {df_pivot.columns.tolist()}")
+    
+    # Rename columns if needed (sometimes FRED returns different names)
+    # We'll handle whatever column names we get
+    column_mapping = {}
+    for col in df_pivot.columns:
+        if col in SERIES_MAP.values():
+            # Find the key for this series_id
+            for key, value in SERIES_MAP.items():
+                if value == col:
+                    column_mapping[col] = key
+                    break
+        elif col in SERIES_MAP.keys():
+            # Already the right name
+            pass
+    
+    # Rename columns
+    if column_mapping:
+        df_pivot = df_pivot.rename(columns=column_mapping)
     
     # Sort by date
     df_pivot = df_pivot.sort_values("date")
     
-    # Reorder columns
-    df_pivot = df_pivot[["date", "3M", "2Y", "5Y", "10Y", "30Y"]]
+    # Get the columns that actually exist
+    existing_columns = [col for col in ["date", "3M", "2Y", "5Y", "10Y", "30Y"] if col in df_pivot.columns]
+    df_pivot = df_pivot[existing_columns]
     
     # Remove rows where all yields are NaN
-    df_pivot = df_pivot.dropna(subset=["3M", "2Y", "5Y", "10Y", "30Y"], how="all")
+    yield_columns = [col for col in ["3M", "2Y", "5Y", "10Y", "30Y"] if col in df_pivot.columns]
+    df_pivot = df_pivot.dropna(subset=yield_columns, how="all")
     
     # Ensure date is string
     df_pivot["date"] = df_pivot["date"].astype(str)
