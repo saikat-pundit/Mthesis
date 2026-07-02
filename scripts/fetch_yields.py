@@ -81,7 +81,7 @@ def fetch_all_yields(date=None):
     return yields
 
 def save_to_csv(yields_dict, filename="data/yield_history.csv"):
-    """Append daily yield data to CSV."""
+    """Append daily yield data to CSV, avoiding duplicates."""
     date = yields_dict.get("date")
     row = {
         "date": date,
@@ -92,23 +92,30 @@ def save_to_csv(yields_dict, filename="data/yield_history.csv"):
         "30Y": yields_dict.get("30Y")
     }
     
-    df_new = pd.DataFrame([row])
+    # If file doesn't exist, create it
+    if not os.path.exists(filename):
+        df_new = pd.DataFrame([row])
+        os.makedirs(os.path.dirname(filename), exist_ok=True)
+        df_new.to_csv(filename, index=False)
+        print(f"✅ Created new CSV with data for {date}")
+        return df_new
     
-    if os.path.exists(filename):
-        df_existing = pd.read_csv(filename)
-        # Check if date already exists, avoid duplicates
-        if date in df_existing["date"].values:
-            print(f"⚠️ Data for {date} already exists. Skipping append.")
-            return df_existing
-        df_combined = pd.concat([df_existing, df_new], ignore_index=True)
+    # Read existing data
+    df_existing = pd.read_csv(filename)
+    
+    # Check if date already exists
+    if date in df_existing["date"].values:
+        print(f"⚠️ Data for {date} already exists. Updating...")
+        # Update the existing row
+        df_existing.loc[df_existing["date"] == date] = row
+        df_existing.to_csv(filename, index=False)
+        return df_existing
     else:
-        df_combined = df_new
-    
-    # Ensure directory exists
-    os.makedirs(os.path.dirname(filename), exist_ok=True)
-    df_combined.to_csv(filename, index=False)
-    print(f"✅ Saved yield data for {date}")
-    return df_combined
+        # Append new row
+        df_combined = pd.concat([df_existing, pd.DataFrame([row])], ignore_index=True)
+        df_combined.to_csv(filename, index=False)
+        print(f"✅ Appended data for {date}")
+        return df_combined
 
 def load_history(filename="data/yield_history.csv"):
     """Load historical yield data from CSV."""
