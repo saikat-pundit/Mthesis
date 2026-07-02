@@ -5,7 +5,7 @@ import torch
 from transformers import AutoTokenizer, AutoModelForCausalLM
 from huggingface_hub import login
 
-MODEL_NAME = "google/gemma-2-9b-it"
+MODEL_NAME = "microsoft/Phi-3.5-mini-instruct"
 MODEL_CACHE = "/home/runner/.cache/huggingface"
 
 def load_model():
