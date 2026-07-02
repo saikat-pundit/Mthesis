@@ -57,6 +57,8 @@ def main():
     report_dir = "reports"
     os.makedirs(report_dir, exist_ok=True)
     report_file = f"{report_dir}/report_{date}.txt"
+    
+    # Write the file (automatically overwrites if exists)
     with open(report_file, 'w') as f:
         f.write(report)
     print(f"📄 Report saved to: {report_file}")
