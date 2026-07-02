@@ -59,7 +59,7 @@ Keep it concise. No jargon explanations. Focus on forward-looking reasoning.
     inputs = tokenizer(prompt, return_tensors="pt")
     outputs = model.generate(
         inputs.input_ids,
-        max_new_tokens=1024,
+        max_new_tokens=8024,
         temperature=0.7,
         do_sample=True,
         top_p=0.95
