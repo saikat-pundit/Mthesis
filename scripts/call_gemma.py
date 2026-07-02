@@ -3,12 +3,21 @@ import pandas as pd
 from datetime import datetime
 import torch
 from transformers import AutoTokenizer, AutoModelForCausalLM
+from huggingface_hub import login
 
 MODEL_NAME = "google/gemma-2-9b-it"
 MODEL_CACHE = "/home/runner/.cache/huggingface"
 
 def load_model():
-    """Load Gemma 2 9B on CPU (slow but works)."""
+    """Load Gemma 2 9B on CPU using Hugging Face token."""
+    token = os.getenv("HUGGINGFACE_TOKEN")
+    if not token:
+        print("⚠️ No HUGGINGFACE_TOKEN found. Please set it in GitHub Secrets.")
+        return None, None
+    
+    # Log in using the token
+    login(token=token)
+    
     print("⏳ Loading Gemma 2 9B model (this may take 2–3 minutes)...")
     tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME, cache_dir=MODEL_CACHE)
     model = AutoModelForCausalLM.from_pretrained(
