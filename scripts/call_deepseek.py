@@ -33,67 +33,54 @@ You are a macro strategist. Analyze the US Treasury yield curve using the data b
 Last 365 days of yields:
 {yield_history}
 
-Current yields:
-3M={yields['3M']:.2f}%, 2Y={yields['2Y']:.2f}%, 5Y={yields['5Y']:.2f}%, 10Y={yields['10Y']:.2f}%, 30Y={yields['30Y']:.2f}%
+Current yields: 3M={yields['3M']:.2f}%, 2Y={yields['2Y']:.2f}%, 5Y={yields['5Y']:.2f}%, 10Y={yields['10Y']:.2f}%, 30Y={yields['30Y']:.2f}%
+Spreads: 30Y-2Y={s30_2:.2f}%, 10Y-2Y={s10_2:.2f}%, 10Y-3M={s10_3:.2f}%, 30Y-5Y={s30_5:.2f}%
 
-Spreads:
-30Y-2Y (Liquidity Proxy): {s30_2:.2f}%
-10Y-2Y (Risk Sentiment): {s10_2:.2f}%
-10Y-3M (Recession Warning): {s10_3:.2f}%
-30Y-5Y (Long-Term Curve): {s30_5:.2f}%
-
-Provide a complete 360° analysis. For every prediction or recommendation, include:
-- The rationale/mechanism behind it (why this happens)
-- Simple explanations of any economic jargon in [square brackets]
+Provide a complete 360° analysis. For each prediction, include:
+- The rationale/mechanism behind it (why, not just what)
 - How global money flows are likely to move
+- Use varied vocabulary—avoid repeating phrases like "this suggests" or "this indicates"
 
-Cover these 7 areas:
+Do NOT include:
+- Any explanation of economic jargon (no footnotes, no definitions)
+- Duplicate display of yields or spreads
 
-1. SHORT/MEDIUM/LONG-TERM YIELD OUTLOOK
-   - Direction of each yield (3M, 2Y, 5Y, 10Y, 30Y)
-   - Rationale: what economic forces drive the move
-   - Jargon explanations: [term = plain English]
+Structure your response exactly as follows:
 
-2. EQUITIES (Sectors & Regions)
-   - Which sectors to overweight/underweight and why
-   - Which regions to prefer and why
-   - Rationale: how yields affect valuations and earnings
-   - Jargon explanations as needed
+1. YIELD OUTLOOK (Short/Medium/Long)
+   For each tenor, state direction and rationale. Reference historical parallels where useful.
 
-3. BONDS (Duration & Credit)
-   - Which duration to prefer/avoid and why
-   - Credit quality view and why
-   - Rationale: how spread movements affect bond prices
+2. EQUITIES
+   Preferred/avoid sectors + regions with rationale. Mention valuation mechanics.
+
+3. BONDS
+   Preferred/avoid duration + credit quality. Explain why each is favored or avoided.
 
 4. GOLD & PRECIOUS METALS
-   - Price direction and rationale (real yields, USD, central bank buying)
-   - Silver vs Gold comparison
-   - Jargon explanations
+   Direction and rationale. Compare gold vs silver.
 
-5. COMMODITIES (Energy, Metals, Agriculture)
-   - Outlook for crude oil, copper, aluminum, agriculture
-   - Rationale: supply/demand, inflation linkage, industrial cycle
-   - Jargon explanations
+5. COMMODITIES
+   Energy, metals, agriculture – outlook and drivers.
 
-6. CASH & FX (USD & Major Pairs)
-   - USD direction and rationale (yield differentials, safe-haven flows)
-   - Major FX pairs outlook
-   - Jargon explanations
+6. CASH & FX
+   USD direction and key FX pairs. Explain yield differentials and safe-haven flows.
 
-7. ACTIONABLE STRATEGY + PORTFOLIO MIX
-   a. Suggested portfolio allocation in % (e.g., Equity XX%, Bonds XX%, Gold XX%, Silver XX%, Bitcoin XX%, Cash XX%)
-   b. Preferred equity theme (sectors, factors) – and why
-   c. Avoid equity theme – and why
-   d. Preferred bond duration – and why
-   e. Bond duration to avoid – and why
-   f. Gold vs Silver vs Bitcoin: which one and why
-   g. Global money flow trend: where is capital moving (US, Europe, Asia, EM)
+7. PORTFOLIO MIX & ACTIONABLE STRATEGY
+   a. Suggested allocation % (Equity, Bonds, Gold, Silver, Bitcoin, Cash)
+   b. Preferred equity theme and why
+   c. Avoid equity theme and why
+   d. Preferred bond duration and why
+   e. Avoid bond duration and why
+   f. Gold vs Silver vs Bitcoin – which one and why
+   g. Global money flow trend – where capital is moving
 
-Keep it concise but thorough. Use simple language where possible.
+8. SCENARIO ANALYSIS
+   Provide 2–3 plausible future scenarios (Base, Bull, Bear) for yields and markets over the next 12 months. For each, assign a probability and explain the triggers and implications.
+
+Keep the analysis concise yet exhaustive. Prioritize forward-looking reasoning over repetition.
 """
     headers = {"Content-Type": "application/json"}
     
-    # Try models in order: pro first, then flash
     models_to_try = ["gemini-2.5-pro", "gemini-2.5-flash"]
     
     for model in models_to_try:
@@ -132,7 +119,6 @@ Keep it concise but thorough. Use simple language where possible.
         except Exception as e:
             print(f"⚠️ Model {model} error: {e}")
     
-    # If all models fail, return a clear error
     return "⚠️ All Gemini models failed to generate analysis. Please check API key or try again later."
 
 def generate_daily_report(yields, regime, confidence, explanation, history_df):
