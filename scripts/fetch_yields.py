@@ -172,3 +172,14 @@ if __name__ == "__main__":
     df = fetch_missing_dates()
     print(f"\n📊 Total rows: {len(df)}")
     print(df.tail())
+# At the bottom of fetch_yields.py, add these exports:
+
+__all__ = [
+    'fetch_yield',
+    'fetch_all_yields',
+    'fetch_all_yields_for_date',
+    'get_last_recorded_date',
+    'fetch_missing_dates',
+    'save_to_csv',
+    'load_history'
+]
