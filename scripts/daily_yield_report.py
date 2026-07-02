@@ -19,9 +19,11 @@ def main():
     # Compute spreads
     df = compute_spreads(df)
     
-    # Get latest data with spreads
+    # Get latest data (always use the most recent available)
     latest = df.iloc[-1]
     date = latest['date']
+    
+    print(f"📅 Using latest available data: {date}")
     
     # Prepare yields dict for report
     yields = {
@@ -39,7 +41,7 @@ def main():
     # Classify regime
     regime, confidence, explanation = classify_regime(latest, df)
     
-    # Generate report
+    # Generate report with Gemini (using last 365 days of data)
     report = generate_daily_report(
         yields=yields,
         regime=regime,
