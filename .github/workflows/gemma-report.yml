@@ -38,6 +38,7 @@ jobs:
       - name: Run Gemma analysis
         env:
           FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
+          HUGGINGFACE_TOKEN: ${{ secrets.HUGGINGFACE_TOKEN }}
         run: python scripts/run_gemma.py
 
       - name: Commit and push Gemma report
