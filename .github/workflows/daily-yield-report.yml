@@ -2,8 +2,6 @@ name: Daily Yield Curve Report
 
 on:
   schedule:
-    # Run at 6:00 AM IST (12:30 AM UTC during standard time, 12:00 AM UTC during DST)
-    # Using 12:30 AM UTC which covers both cases
     - cron: '30 0 * * 1-5'
   workflow_dispatch:
 
@@ -34,17 +32,12 @@ jobs:
         mkdir -p data
         mkdir -p reports
         
-    - name: Backfill historical data (if missing)
+    - name: Fetch full historical data from 2019
       env:
         FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
       run: |
-        # Only run backfill if CSV doesn't exist or is empty
-        if [ ! -s data/yield_history.csv ]; then
-          echo "📅 No historical data found. Running backfill..."
-          python scripts/backfill_history.py
-        else
-          echo "✅ Historical data already exists."
-        fi
+        echo "📅 Fetching full historical data from 2019-01-01..."
+        python scripts/backfill_history.py
         
     - name: Run daily yield report
       env:
