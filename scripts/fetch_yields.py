@@ -99,14 +99,8 @@ def fetch_missing_dates():
     last_date = get_last_recorded_date(filename)
     
     if last_date is None:
-        print("📅 No historical data found. Fetching all data from 2019...")
-        # Run backfill for first time
-        try:
-            from backfill_history import build_historical_csv
-            return build_historical_csv()
-        except ImportError:
-            print("⚠️ backfill_history.py not found. Please run backfill first.")
-            return None
+        print("❌ No existing CSV found. Please run migration first or re‑create the file.")
+        return None
     
     print(f"📅 Last recorded date: {last_date}")
     
@@ -203,8 +197,11 @@ def load_history(filename="data/yield_history.csv"):
 # --- MAIN TEST ---
 if __name__ == "__main__":
     df = fetch_missing_dates()
-    print(f"\n📊 Total rows: {len(df)}")
-    print(df.tail())
+    if df is not None:
+        print(f"\n📊 Total rows: {len(df)}")
+        print(df.tail())
+    else:
+        print("❌ Could not fetch data.")
 
 __all__ = [
     'fetch_yield',
