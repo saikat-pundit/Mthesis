@@ -45,12 +45,20 @@ jobs:
           mkdir -p data
           mkdir -p reports
 
+      - name: Run migration to create CSV (if missing)
+        run: |
+          if [ ! -f data/yield_history.csv ]; then
+            echo "📄 CSV not found. Running migration to create it..."
+            python scripts/migrate_csv_columns.py
+          else
+            echo "✅ CSV already exists."
+          fi
+
       - name: Fetch and append new data to CSV
         env:
           FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
         run: |
           python scripts/fetch_yields.py
-
       - name: Commit and push CSV changes (if file exists)
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
