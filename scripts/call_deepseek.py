@@ -146,7 +146,7 @@ Keep the analysis exhaustive, highly analytical, and forward-looking. Maximize o
                 "maxOutputTokens": 8192,
                 "temperature": 0.7,
                 "topP": 0.95
-            }
+            },
             "safetySettings": [
                 {
                     "category": "HARM_CATEGORY_HARASSMENT",
