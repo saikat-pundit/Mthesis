@@ -48,7 +48,7 @@ def fetch_yield(series_id, date=None):
             val = float(value)
             # Convert millions to billions for M2SL and WALCL
             if series_id in ["M2SL", "WALCL"]:
-                val = val / 1000.0  # millions → billions
+                val = val / 1000.0
             return val
     return None
 
@@ -67,12 +67,30 @@ def get_last_recorded_date(filename="data/yield_history.csv"):
 def fetch_all_yields_for_date(date):
     """Fetch all benchmark yields and macro data for a specific date."""
     yields = {"date": date}
-    for tenure, series_id in SERIES_MAP.items():
+    
+    # Daily series: yields, DXY, FEDFUNDS
+    daily_series = ["3M", "2Y", "5Y", "10Y", "30Y", "DXY", "FEDFUNDS"]
+    for tenure in daily_series:
+        series_id = SERIES_MAP[tenure]
         val = fetch_yield(series_id, date)
-        if val is not None:
-            yields[tenure] = val
-        else:
-            yields[tenure] = None
+        yields[tenure] = val if val is not None else None
+    
+    # M2SL – monthly: only fetch on the last day of the month
+    date_obj = datetime.strptime(date, "%Y-%m-%d")
+    next_day = date_obj + timedelta(days=1)
+    if next_day.month != date_obj.month:
+        val = fetch_yield("M2SL", date)
+        yields["M2SL"] = val if val is not None else None
+    else:
+        yields["M2SL"] = None
+    
+    # WALCL – weekly: only fetch on Wednesdays (weekday = 2)
+    if date_obj.weekday() == 2:
+        val = fetch_yield("WALCL", date)
+        yields["WALCL"] = val if val is not None else None
+    else:
+        yields["WALCL"] = None
+    
     return yields
 
 def fetch_missing_dates():
