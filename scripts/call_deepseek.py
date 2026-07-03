@@ -26,7 +26,11 @@ def call_gemini(yields, history_df):
     s10_2 = yields.get('10Y', 0) - yields.get('2Y', 0)
     s10_3 = yields.get('10Y', 0) - yields.get('3M', 0)
     s30_5 = yields.get('30Y', 0) - yields.get('5Y', 0)
-
+    dxy = yields.get('DXY')
+    fedfunds = yields.get('FEDFUNDS')
+    dxy_str = f"{dxy:.2f}" if dxy else "N/A"
+    fed_str = f"{fedfunds:.2f}" if fedfunds else "N/A"
+    
     prompt = f"""
 You are a macro strategist. Analyze the US Treasury yield curve using the data below.
 
@@ -35,6 +39,8 @@ Last 365 days of yields:
 
 Current yields: 3M={yields['3M']:.2f}%, 2Y={yields['2Y']:.2f}%, 5Y={yields['5Y']:.2f}%, 10Y={yields['10Y']:.2f}%, 30Y={yields['30Y']:.2f}%
 Spreads: 30Y-2Y={s30_2:.2f}%, 10Y-2Y={s10_2:.2f}%, 10Y-3M={s10_3:.2f}%, 30Y-5Y={s30_5:.2f}%
+US Dollar Index (DXY): {dxy_str}
+Fed Funds Rate: {fed_str}%
 
 Provide a complete 360° analysis. For each prediction, include:
 - The rationale/mechanism behind it (why, not just what)
