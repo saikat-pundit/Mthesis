@@ -125,7 +125,16 @@ Structure your response exactly as follows:
    - The underlying rationale and macro triggers
    - The precise probability of this outcome occurring
 
-Keep the analysis exhaustive, highly analytical, and forward-looking. Maximize output quality.
+For your analysis, you MUST follow these formatting constraints to ensure completion:
+1. Do NOT write long introduction or transition paragraphs. Go straight to the data points.
+2. Use concise, punchy, high-impact bullet points for all sub-sections.
+3. Explicitly weave in the pre-calculated MoM and YoY percentage/basis point changes inside those bullets.
+4. Keep descriptions dense with macro logic but physically short so all 9 sections fit perfectly.
+
+Do NOT include:
+- Any explanation of economic jargon (no footnotes, no definitions).
+- Duplicate display of yields or spreads.
+- Internal instructions or chain-of-thought processing.
 """
     headers = {"Content-Type": "application/json"}
     
