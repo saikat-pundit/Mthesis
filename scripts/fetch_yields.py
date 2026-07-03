@@ -9,7 +9,7 @@ load_dotenv()
 FRED_API_KEY = os.getenv("FRED_API_KEY")
 BASE_URL = "https://api.stlouisfed.org/fred/series/observations"
 
-# US Treasury constant maturity yields
+# US Treasury constant maturity yields + DXY + Fed Funds
 SERIES_MAP = {
     "3M": "DGS3MO",
     "2Y": "DGS2",
@@ -54,9 +54,19 @@ def get_last_recorded_date(filename="data/yield_history.csv"):
     if df.empty:
         return None
     
-    # Get the latest date
     last_date = df["date"].max()
     return last_date
+
+def fetch_all_yields_for_date(date):
+    """Fetch all benchmark yields and macro data for a specific date."""
+    yields = {"date": date}
+    for tenure, series_id in SERIES_MAP.items():
+        val = fetch_yield(series_id, date)
+        if val is not None:
+            yields[tenure] = val
+        else:
+            yields[tenure] = None
+    return yields
 
 def fetch_missing_dates():
     """Fetch only the missing dates since last recorded date."""
@@ -75,7 +85,6 @@ def fetch_missing_dates():
     
     print(f"📅 Last recorded date: {last_date}")
     
-    # Start from the day after last recorded date
     start_date = (datetime.strptime(last_date, "%Y-%m-%d") + timedelta(days=1)).strftime("%Y-%m-%d")
     end_date = datetime.now().strftime("%Y-%m-%d")
     
@@ -85,14 +94,12 @@ def fetch_missing_dates():
     
     print(f"📅 Fetching new data from {start_date} to {end_date}")
     
-    # Get all business days between start_date and end_date
     current_date = datetime.strptime(start_date, "%Y-%m-%d")
     end_date_dt = datetime.strptime(end_date, "%Y-%m-%d")
     
     new_data = []
     while current_date <= end_date_dt:
         date_str = current_date.strftime("%Y-%m-%d")
-        # Skip weekends
         if current_date.weekday() < 5:  # Monday-Friday
             yields = fetch_all_yields_for_date(date_str)
             if yields and yields.get("10Y") is not None:
@@ -107,40 +114,23 @@ def fetch_missing_dates():
         return pd.read_csv(filename)
     
     # Append new data to CSV
-     df_new = pd.DataFrame(new_data)
+    df_new = pd.DataFrame(new_data)
     df_existing = pd.read_csv(filename)
     
-    # Ensure df_new has all columns that df_existing has
+    # Ensure column alignment
     for col in df_existing.columns:
         if col not in df_new.columns:
             df_new[col] = None
-    
-    # Ensure df_existing has all columns that df_new has
     for col in df_new.columns:
         if col not in df_existing.columns:
             df_existing[col] = None
     
     df_combined = pd.concat([df_existing, df_new], ignore_index=True)
-    
-    # Sort by date and remove duplicates
     df_combined = df_combined.sort_values("date").drop_duplicates(subset=["date"], keep="last")
-    
-    # ✅ FIX: Save the combined DataFrame back to CSV
     df_combined.to_csv(filename, index=False)
     
     print(f"✅ Added {len(new_data)} new rows. Total: {len(df_combined)} rows")
     return df_combined
-
-def fetch_all_yields_for_date(date):
-    """Fetch all benchmark yields for a specific date."""
-    yields = {"date": date}
-    for tenure, series_id in SERIES_MAP.items():
-        val = fetch_yield(series_id, date)
-        if val is not None:
-            yields[tenure] = val
-        else:
-            yields[tenure] = None
-    return yields
 
 def save_to_csv(yields_dict, filename="data/yield_history.csv"):
     """Append daily yield data to CSV, avoiding duplicates."""
@@ -160,12 +150,9 @@ def save_to_csv(yields_dict, filename="data/yield_history.csv"):
     
     if os.path.exists(filename):
         df_existing = pd.read_csv(filename)
-        # Check if date already exists
         if date in df_existing["date"].values:
             print(f"⚠️ Data for {date} already exists. Updating...")
-            # Remove the existing row
             df_existing = df_existing[df_existing["date"] != date]
-            # Append the new row
             df_combined = pd.concat([df_existing, df_new], ignore_index=True)
             df_combined.to_csv(filename, index=False)
             return df_combined
@@ -175,7 +162,6 @@ def save_to_csv(yields_dict, filename="data/yield_history.csv"):
             print(f"✅ Appended data for {date}")
             return df_combined
     else:
-        # Ensure directory exists
         os.makedirs(os.path.dirname(filename), exist_ok=True)
         df_new.to_csv(filename, index=False)
         print(f"✅ Created new CSV with data for {date}")
@@ -189,11 +175,9 @@ def load_history(filename="data/yield_history.csv"):
 
 # --- MAIN TEST ---
 if __name__ == "__main__":
-    # Fetch only missing data
     df = fetch_missing_dates()
     print(f"\n📊 Total rows: {len(df)}")
     print(df.tail())
-# At the bottom of fetch_yields.py, add these exports:
 
 __all__ = [
     'fetch_yield',
