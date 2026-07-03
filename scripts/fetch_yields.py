@@ -9,15 +9,17 @@ load_dotenv()
 FRED_API_KEY = os.getenv("FRED_API_KEY")
 BASE_URL = "https://api.stlouisfed.org/fred/series/observations"
 
-# US Treasury constant maturity yields + DXY + Fed Funds
+# US Treasury yields + DXY + Fed Funds + M2 + Fed Balance Sheet
 SERIES_MAP = {
     "3M": "DGS3MO",
     "2Y": "DGS2",
     "5Y": "DGS5",
     "10Y": "DGS10",
     "30Y": "DGS30",
-    "DXY": "DXY",
-    "FEDFUNDS": "FEDFUNDS"
+    "DXY": "TWEXBGSMTH",
+    "FEDFUNDS": "RIFSPFFNB",
+    "M2SL": "M2SL",
+    "WALCL": "WALCL"
 }
 
 def fetch_yield(series_id, date=None):
@@ -42,7 +44,12 @@ def fetch_yield(series_id, date=None):
     
     if data.get("observations") and len(data["observations"]) > 0:
         value = data["observations"][0]["value"]
-        return float(value) if value != "." else None
+        if value != ".":
+            val = float(value)
+            # Convert millions to billions for M2SL and WALCL
+            if series_id in ["M2SL", "WALCL"]:
+                val = val / 1000.0  # millions → billions
+            return val
     return None
 
 def get_last_recorded_date(filename="data/yield_history.csv"):
@@ -143,7 +150,9 @@ def save_to_csv(yields_dict, filename="data/yield_history.csv"):
         "10Y": yields_dict.get("10Y"),
         "30Y": yields_dict.get("30Y"),
         "DXY": yields_dict.get("DXY"),
-        "FEDFUNDS": yields_dict.get("FEDFUNDS")
+        "FEDFUNDS": yields_dict.get("FEDFUNDS"),
+        "M2SL": yields_dict.get("M2SL"),
+        "WALCL": yields_dict.get("WALCL")
     }
     
     df_new = pd.DataFrame([row])
