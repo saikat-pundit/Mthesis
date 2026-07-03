@@ -134,13 +134,20 @@ def fetch_all_data():
         if col in df_new.columns:
             df_new[col] = df_new[col] / 1000.0
     
-    # ✅ Keep only last day of each month for monthly/quarterly series
+    # ✅ FIX: Keep daily yields intact, only group monthly/quarterly columns
     monthly_cols = ["M2SL", "CPIAUCSL", "PPIACO", "AHE", "UNRATE", "PAYEMS", "JTSJOL", "HOSINV", "GDP", "GFDEBTN"]
+    daily_cols = ["3M", "2Y", "5Y", "10Y", "30Y", "DXY", "FEDFUNDS", "WALCL"]
+    
+    # For monthly/quarterly columns: keep only last day of each month
     for col in monthly_cols:
         if col in df_new.columns:
-            # Group by year-month, keep last day
+            # Create a temporary month‑end filter
             df_new["ym"] = df_new["date"].apply(lambda x: x[:7])
-            df_new = df_new.sort_values("date").groupby("ym").tail(1).drop("ym", axis=1)
+            # Keep only the last row per month for these columns
+            df_new[col] = df_new.groupby("ym")[col].transform("last")
+            # For dates that are not month‑end, set these columns to None
+            df_new.loc[df_new["date"] != df_new.groupby("ym")["date"].transform("last"), col] = None
+    df_new = df_new.drop("ym", axis=1)
     
     # Merge with existing (no duplicates)
     df_combined = pd.concat([df_existing, df_new], ignore_index=True)
