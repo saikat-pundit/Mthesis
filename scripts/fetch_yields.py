@@ -107,8 +107,19 @@ def fetch_missing_dates():
         return pd.read_csv(filename)
     
     # Append new data to CSV
-    df_new = pd.DataFrame(new_data)
+     df_new = pd.DataFrame(new_data)
     df_existing = pd.read_csv(filename)
+    
+    # Ensure df_new has all columns that df_existing has
+    for col in df_existing.columns:
+        if col not in df_new.columns:
+            df_new[col] = None
+    
+    # Ensure df_existing has all columns that df_new has
+    for col in df_new.columns:
+        if col not in df_existing.columns:
+            df_existing[col] = None
+    
     df_combined = pd.concat([df_existing, df_new], ignore_index=True)
     
     # Sort by date and remove duplicates
