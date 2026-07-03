@@ -9,29 +9,31 @@ load_dotenv()
 FRED_API_KEY = os.getenv("FRED_API_KEY")
 BASE_URL = "https://api.stlouisfed.org/fred/series/observations"
 
-# Complete series map with all new indicators
+# Full series map
 SERIES_MAP = {
-    # Treasury yields
+    # Daily yields
     "3M": "DGS3MO",
     "2Y": "DGS2",
     "5Y": "DGS5",
     "10Y": "DGS10",
     "30Y": "DGS30",
-    # Macro indicators
+    # Daily macro
     "DXY": "TWEXBGSMTH",
     "FEDFUNDS": "RIFSPFFNB",
-    "M2SL": "M2SL",
+    # Weekly
     "WALCL": "WALCL",
-    # New additions
-    "GDP": "GDP",
-    "GFDEBTN": "GFDEBTN",
+    # Monthly
+    "M2SL": "M2SL",
     "CPIAUCSL": "CPIAUCSL",
     "PPIACO": "PPIACO",
     "AHE": "CES0500000003",
     "UNRATE": "UNRATE",
     "PAYEMS": "PAYEMS",
     "JTSJOL": "JTSJOL",
-    "HOSINV": "HOSINVUSM495N"
+    "HOSINV": "HOSINVUSM495N",
+    # Quarterly
+    "GDP": "GDP",
+    "GFDEBTN": "GFDEBTN"
 }
 
 def fetch_bulk_series(series_id, start_date, end_date):
@@ -65,11 +67,11 @@ def get_last_recorded_date(filename="data/yield_history.csv"):
         return "2019-01-01"
     return df["date"].max()
 
-def fetch_missing_dates():
-    """Fetch all missing data in bulk."""
+def fetch_all_data():
+    """Fetch all data (yields + macro) from 2019-01-01 to today."""
     filename = "data/yield_history.csv"
     
-    # If CSV doesn't exist, create empty with headers
+    # If CSV doesn't exist, create empty with full headers
     if not os.path.exists(filename):
         df_empty = pd.DataFrame(columns=[
             "date", "3M", "2Y", "5Y", "10Y", "30Y", 
@@ -132,12 +134,20 @@ def fetch_missing_dates():
         if col in df_new.columns:
             df_new[col] = df_new[col] / 1000.0
     
-    # Merge with existing
+    # ✅ Keep only last day of each month for monthly/quarterly series
+    monthly_cols = ["M2SL", "CPIAUCSL", "PPIACO", "AHE", "UNRATE", "PAYEMS", "JTSJOL", "HOSINV", "GDP", "GFDEBTN"]
+    for col in monthly_cols:
+        if col in df_new.columns:
+            # Group by year-month, keep last day
+            df_new["ym"] = df_new["date"].apply(lambda x: x[:7])
+            df_new = df_new.sort_values("date").groupby("ym").tail(1).drop("ym", axis=1)
+    
+    # Merge with existing (no duplicates)
     df_combined = pd.concat([df_existing, df_new], ignore_index=True)
     df_combined = df_combined.sort_values("date").drop_duplicates(subset=["date"], keep="last")
     df_combined.to_csv(filename, index=False)
     
-    print(f"✅ Added {len(new_rows)} new rows. Total: {len(df_combined)} rows")
+    print(f"✅ Added {len(df_new)} new rows. Total: {len(df_combined)} rows")
     return df_combined
 
 def save_to_csv(yields_dict, filename="data/yield_history.csv"):
@@ -193,7 +203,7 @@ def load_history(filename="data/yield_history.csv"):
 
 # --- MAIN TEST ---
 if __name__ == "__main__":
-    df = fetch_missing_dates()
+    df = fetch_all_data()
     if df is not None:
         print(f"\n📊 Total rows: {len(df)}")
         print(df.tail())
@@ -203,7 +213,7 @@ if __name__ == "__main__":
 __all__ = [
     'fetch_bulk_series',
     'get_last_recorded_date',
-    'fetch_missing_dates',
+    'fetch_all_data',
     'save_to_csv',
     'load_history'
 ]
