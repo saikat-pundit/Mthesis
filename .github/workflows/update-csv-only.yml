@@ -13,6 +13,22 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 1
+
+      - name: Verify data directory and CSV
+        run: |
+          ls -la data/ || echo "⚠️ data/ directory not found"
+          if [ -f data/yield_history.csv ]; then
+            echo "✅ data/yield_history.csv found. First 3 lines:"
+            head -3 data/yield_history.csv
+          else
+            echo "⚠️ data/yield_history.csv NOT found. Creating an empty one."
+            mkdir -p data
+            echo "date,3M,2Y,5Y,10Y,30Y,DXY,FEDFUNDS,M2SL,WALCL" > data/yield_history.csv
+            echo "✅ Created empty CSV with correct headers."
+          fi
 
       - name: Set up Python
         uses: actions/setup-python@v4
