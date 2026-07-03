@@ -150,25 +150,25 @@ Keep the analysis exhaustive, highly analytical, and forward-looking. Maximize o
             "safetySettings": [
                 {
                     "category": "HARM_CATEGORY_HARASSMENT",
-                    "threshold": "BLOCK_ONLY_HIGH"
+                    "threshold": "BLOCK_NONE"
                 },
                 {
                     "category": "HARM_CATEGORY_HATE_SPEECH",
-                    "threshold": "BLOCK_ONLY_HIGH"
+                    "threshold": "BLOCK_NONE"
                 },
                 {
                     "category": "HARM_CATEGORY_SEXUALLY_EXPLICIT",
-                    "threshold": "BLOCK_ONLY_HIGH"
+                    "threshold": "BLOCK_NONE"
                 },
                 {
                     "category": "HARM_CATEGORY_DANGEROUS_CONTENT",
-                    "threshold": "BLOCK_ONLY_HIGH"
+                    "threshold": "BLOCK_NONE"
                 }
             ]
         }
         
         try:
-            response = requests.post(f"{api_url}?key={GEMINI_API_KEY}", headers=headers, json=payload, timeout=90)
+            response = requests.post(f"{api_url}?key={GEMINI_API_KEY}", headers=headers, json=payload, timeout=180)
             
             if response.status_code == 200:
                 result = response.json()
