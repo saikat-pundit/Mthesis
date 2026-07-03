@@ -5,6 +5,11 @@ on:
     - cron: '30 4 * * 1-5'
   workflow_dispatch:
 
+# Prevents simultaneous runs from colliding when pushing to git
+concurrency:
+  group: daily-report-${{ github.ref }}
+  cancel-in-progress: false
+
 jobs:
   generate-report:
     runs-on: ubuntu-latest
@@ -13,14 +18,16 @@ jobs:
     
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4  # Upgraded to v4
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
+        fetch-depth: 1
       
     - name: Set up Python
-      uses: actions/setup-python@v4
+      uses: actions/setup-python@v5  # Upgraded to v5
       with:
         python-version: '3.10'
+        cache: 'pip' # Automatically caches requirements to speed up future runs
         
     - name: Install dependencies
       run: |
@@ -32,12 +39,12 @@ jobs:
         mkdir -p data
         mkdir -p reports
         
-    - name: Fetch full historical data from 2019
+    - name: Fetch full historical data
       env:
         FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
       run: |
-        echo "📅 Fetching full historical data from 2019-01-01..."
-        python scripts/backfill_history.py
+        echo "📅 Fetching data updates..."
+        python scripts/fetch_all_data.py  # Fixed the script name!
         
     - name: Run daily yield report
       env:
