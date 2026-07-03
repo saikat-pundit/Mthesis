@@ -1,14 +1,14 @@
-name: Gemma 2 9B Yield Report
+name: Hugging Face Cloud Yield Report
 
 on:
   schedule:
-    - cron: '30 22 * * 1-5'
+    - cron: '30 23 * * 1-5'
   workflow_dispatch:
 
 jobs:
-  gemma-report:
+  hf-cloud-report:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 5
 
     steps:
       - name: Checkout repository
@@ -22,31 +22,25 @@ jobs:
       - name: Install dependencies
         run: |
           pip install --upgrade pip
-          pip install -r requirements.txt
-
-      - name: Cache Hugging Face models
-        uses: actions/cache@v3
-        with:
-          path: ~/.cache/huggingface
-          key: gemma-2-9b-cache
+          pip install requests pandas python-dotenv
 
       - name: Create directories
         run: |
           mkdir -p data
           mkdir -p reports
 
-      - name: Run Gemma analysis
+      - name: Run Hugging Face cloud analysis
         env:
           FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
           HUGGINGFACE_TOKEN: ${{ secrets.HUGGINGFACE_TOKEN }}
-        run: python scripts/run_gemma.py
+        run: python scripts/run_hf_api.py
 
-      - name: Commit and push Gemma report
+      - name: Commit and push report
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-          git add reports/gemma_*.txt
-          git diff --quiet && git diff --staged --quiet || git commit -m "Gemma report $(date +'%Y-%m-%d')"
+          git add reports/hf_*.txt
+          git diff --quiet && git diff --staged --quiet || git commit -m "HF cloud report $(date +'%Y-%m-%d')"
           git push
