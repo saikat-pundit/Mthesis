@@ -65,34 +65,92 @@ def get_last_recorded_date(filename="data/yield_history.csv"):
     last_date = df["date"].max()
     return last_date
 
-def fetch_all_yields_for_date(date):
-    """Fetch all benchmark yields and macro data for a specific date."""
-    yields = {"date": date}
+def fetch_bulk_series(series_id, start_date, end_date):
+    """Fetch all observations for a series in one API call."""
+    params = {
+        "series_id": series_id,
+        "api_key": FRED_API_KEY,
+        "file_type": "json",
+        "observation_start": start_date,
+        "observation_end": end_date,
+        "limit": 5000
+    }
+    response = requests.get(BASE_URL, params=params)
+    if response.status_code != 200:
+        return {}
+    data = response.json()
+    results = {}
+    for obs in data.get("observations", []):
+        date = obs["date"]
+        val = obs["value"]
+        if val != ".":
+            results[date] = float(val)
+    return results
+
+def fetch_missing_dates():
+    """Fetch all missing data in bulk, not day‑by‑day."""
+    filename = "data/yield_history.csv"
     
-    # Daily series: yields, DXY, FEDFUNDS
-    daily_series = ["3M", "2Y", "5Y", "10Y", "30Y", "DXY", "FEDFUNDS"]
-    for tenure in daily_series:
-        series_id = SERIES_MAP[tenure]
-        val = fetch_yield(series_id, date)
-        yields[tenure] = val if val is not None else None
+    # If CSV doesn't exist, create empty with headers
+    if not os.path.exists(filename):
+        df_empty = pd.DataFrame(columns=["date", "3M", "2Y", "5Y", "10Y", "30Y", "DXY", "FEDFUNDS", "M2SL", "WALCL"])
+        df_empty.to_csv(filename, index=False)
+        print("✅ Created empty CSV with headers.")
     
-    # M2SL – monthly: only fetch on the last day of the month
-    date_obj = datetime.strptime(date, "%Y-%m-%d")
-    next_day = date_obj + timedelta(days=1)
-    if next_day.month != date_obj.month:
-        val = fetch_yield("M2SL", date)
-        yields["M2SL"] = val if val is not None else None
+    df_existing = pd.read_csv(filename)
+    if df_existing.empty:
+        last_date = "2019-01-01"
+        print("📅 CSV is empty. Starting from 2019-01-01...")
     else:
-        yields["M2SL"] = None
+        last_date = df_existing["date"].max()
+        print(f"📅 Last recorded date: {last_date}")
     
-    # WALCL – weekly: only fetch on Wednesdays (weekday = 2)
-    if date_obj.weekday() == 2:
-        val = fetch_yield("WALCL", date)
-        yields["WALCL"] = val if val is not None else None
-    else:
-        yields["WALCL"] = None
+    start_date = (datetime.strptime(last_date, "%Y-%m-%d") + timedelta(days=1)).strftime("%Y-%m-%d")
+    end_date = datetime.now().strftime("%Y-%m-%d")
     
-    return yields
+    if start_date > end_date:
+        print("✅ Already up to date!")
+        return df_existing
+    
+    print(f"📅 Fetching bulk data from {start_date} to {end_date}...")
+    
+    # Fetch all series in bulk
+    all_series_data = {}
+    for tenure, series_id in SERIES_MAP.items():
+        print(f"  Fetching {tenure} ({series_id})...")
+        all_series_data[tenure] = fetch_bulk_series(series_id, start_date, end_date)
+    
+    # Build new rows from the merged data
+    all_dates = set()
+    for data in all_series_data.values():
+        all_dates.update(data.keys())
+    all_dates = sorted(all_dates)
+    
+    new_rows = []
+    for date in all_dates:
+        row = {"date": date}
+        for tenure in SERIES_MAP.keys():
+            row[tenure] = all_series_data[tenure].get(date)
+        new_rows.append(row)
+    
+    if not new_rows:
+        print("✅ No new data available.")
+        return df_existing
+    
+    df_new = pd.DataFrame(new_rows)
+    
+    # Convert millions to billions for M2SL and WALCL
+    for col in ["M2SL", "WALCL"]:
+        if col in df_new.columns:
+            df_new[col] = df_new[col] / 1000.0
+    
+    # Merge with existing
+    df_combined = pd.concat([df_existing, df_new], ignore_index=True)
+    df_combined = df_combined.sort_values("date").drop_duplicates(subset=["date"], keep="last")
+    df_combined.to_csv(filename, index=False)
+    
+    print(f"✅ Added {len(new_rows)} new rows. Total: {len(df_combined)} rows")
+    return df_combined
 
 def fetch_missing_dates():
     """Fetch only the missing dates since last recorded date."""
