@@ -51,7 +51,7 @@ jobs:
       env:
         NVIDIA_API_KEY: ${{ secrets.NVIDIA_API_KEY }}
       run: |
-        python scripts/deepseek_yield_report.py
+        python scripts/deepseek.py
         
     - name: Commit and push changes
       env:
