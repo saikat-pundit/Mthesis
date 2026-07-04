@@ -5,7 +5,7 @@ sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 # ✅ FIX: Changed import from the missing 'fetch_yields' to 'fetch_all_data'
 from fetch_all_data import fetch_all_data, load_history
 from analyze_regime import compute_spreads, classify_regime
-from call_deepseek import generate_daily_report
+from gemini import generate_daily_report
 
 def main():
     print("🚀 Starting daily yield curve report...")
