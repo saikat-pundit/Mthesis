@@ -18,7 +18,7 @@ load_dotenv()
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 
 def call_gemini(yields, history_df):
-    """Call Gemini with pre-calculated macro trends, CAGR, and 2-year raw data."""
+    """Call Gemini with pre-calculated macro trends, inflation expectations, and 2-year raw data."""
     if not GEMINI_API_KEY:
         return "⚠️ No API key. Please set GEMINI_API_KEY."
 
@@ -86,11 +86,18 @@ def call_gemini(yields, history_df):
     30Y Yield: {get_historical_metric('30Y', is_rate=True)}
     Fed Funds Rate: {get_historical_metric('FEDFUNDS', is_rate=True)}
     
+    INFLATION EXPECTATIONS (Changes in Basis Points):
+    1-Year Expected Inflation (EXPINF1YR): {get_historical_metric('EXPINF1YR', is_rate=True)}
+    2-Year Expected Inflation (EXPINF2YR): {get_historical_metric('EXPINF2YR', is_rate=True)}
+    3-Year Expected Inflation (EXPINF3YR): {get_historical_metric('EXPINF3YR', is_rate=True)}
+    5-Year Expected Inflation (EXPINF5YR): {get_historical_metric('EXPINF5YR', is_rate=True)}
+    10-Year Expected Inflation (EXPINF10YR): {get_historical_metric('EXPINF10YR', is_rate=True)}
+
     MACRO ECONOMY (Changes in Percentages):
     GDP (Trillions): {get_historical_metric('GDP')}
     Federal Debt (Trillions): {get_historical_metric('GFDEBTN')}
-    CPI Inflation Index: {get_historical_metric('CPIAUCSL')}
-    PPI Inflation Index: {get_historical_metric('PPIACO')}
+    CPI Inflation Index (Actual): {get_historical_metric('CPIAUCSL')}
+    PPI Inflation Index (Actual): {get_historical_metric('PPIACO')}
     US Dollar Index (DXY): {get_historical_metric('DXY')}
     
     LABOR, WAGES, & HOUSING (Changes in Percentages):
@@ -111,7 +118,7 @@ def call_gemini(yields, history_df):
 
     # 5. The Institutional Prompt
     prompt = f"""
-    You are a top-tier macro strategist writing for an institutional client. I have pre-calculated the exact growth trajectories (MoM, QoQ, YoY, 2-Year CAGR) for the US economy, bond yields, and labor market, AND I am providing the raw 2-year timeline.
+    You are a top-tier macro strategist writing for an institutional client. I have pre-calculated the exact growth trajectories (MoM, QoQ, YoY, 2-Year CAGR) for the US economy, bond yields, forward inflation expectations, and the labor market. I am also providing the raw 2-year timeline.
 
     CURRENT SPREADS SNAPSHOT:
     30Y-2Y={s30_2:.2f}%, 10Y-2Y={s10_2:.2f}%, 10Y-3M={s10_3:.2f}%, 30Y-5Y={s30_5:.2f}%
@@ -126,17 +133,18 @@ def call_gemini(yields, history_df):
 
     STRICT RULES FOR YOUR OUTPUT:
     1. TONE & LUCIDITY: Your language must be lucid, direct, and accessible. Write like a seasoned Wall Street strategist—crisp and insightful, but easy to read. Do not use overly flowery prose or dramatic metaphors. Never explain economic jargon.
-    2. ADVANCED DATA WEAVING: Do not just quote raw numbers. You MUST use the provided CAGR (Compound Annual Growth Rate) or annualized basis points to describe the long-term trend, and juxtapose it directly against recent MoM or QoQ momentum to show if the trend is accelerating, stalling, or reversing. 
-    3. ASSET CLASS OUTLOOK & PREFERENCES (CRITICAL): For Equities, Bonds, Gold, Commodities, and FX, you MUST follow a two-part structure: 
-       - First, provide a concise, Current scenarios and forward-looking forecast for the sector. 
-       - Second, explicitly list what to "PREFER" and what to "AVOID" with a crisp rationale tied to the data. While analysing always look yield curve, Yield Spread , Histocial Precedence. Dont Just look one single data points compare it with other available data points to find the. A perfect comperative analysis.
-    4. THE HUMAN ANGLE: Explicitly compare Average Hourly Earnings (wage growth) against CPI (inflation). Is Main Street's real purchasing power growing or shrinking? How is the current unemployment rate, combined with mortgage rates (implied by 10Y/30Y yields), impacting housing supply (HOSINV)?
-    5. In Scenario Sections, discuss all three Base / Bull / Bear case with probability and reasoning according to past history. Must be SHORT and SPOT-on
-    6. Actionable Strategy discuss:- Risky / Conservative / Balanced Investor strategy with reasoning and precise
-    7. In macro economincs always take a look at 30Y - 2Y Spread (Global Liquidity Proxy) , 10Y - 2Y Spread (Federal Policy & Risk Sentiment) , 10Y - 3M Spread (Recession Inversion Warning), 30Y - 5Y Spread (Long-Term Bond Curve)
+    2. ADVANCED DATA WEAVING: Do not just quote raw numbers. You MUST use the provided CAGR or annualized basis points to describe the long-term trend, and juxtapose it directly against recent MoM or QoQ momentum to show if the trend is accelerating, stalling, or reversing. 
+    3. THE INFLATION EXPECTATIONS NEXUS (CRITICAL): You MUST explicitly weave the forward inflation expectations (1Y through 10Y) into ALL 9 sections. Analyze the spread between *actual* CPI and *expected* inflation. How are changing expectations driving yield curve dynamics, wage growth negotiations, DXY strength, and asset class valuations?
+    4. ASSET CLASS OUTLOOK & PREFERENCES: For Equities, Bonds, Gold, Commodities, and FX, you MUST follow a two-part structure: 
+       - First, provide a concise, forward-looking forecast for the sector driven by liquidity, yield spreads, and inflation expectations.
+       - Second, explicitly list what to "PREFER" and what to "AVOID" with a crisp rationale tied to the data. Compare multiple data points to find the real narrative.
+    5. THE HUMAN ANGLE: Explicitly compare Average Hourly Earnings (wage growth) against CPI (actual inflation) AND 1Y/2Y Inflation Expectations. Is Main Street's real purchasing power shrinking? Are consumers bracing for higher prices? How is the unemployment rate, combined with mortgage rates (implied by yields), impacting housing supply (HOSINV)?
+    6. SCENARIO ANALYSIS: Discuss Base, Bull, and Bear cases with precise probabilities and reasoning according to past history and the current yield curve regime. Must be short and spot-on.
+    7. ACTIONABLE STRATEGY: Provide precise allocation/strategy advice tailored for Risky, Conservative, and Balanced Investors.
+    8. MACRO FOUNDATIONS: Always evaluate the 30Y-2Y Spread (Global Liquidity Proxy), 10Y-2Y Spread (Federal Policy & Risk Sentiment), 10Y-3M Spread (Recession Inversion Warning), and 30Y-5Y Spread (Long-Term Bond Curve).
     
     Structure your response exactly as follows:
-    1. MACROECONOMIC & LIQUIDITY TRENDS
+    1. MACROECONOMIC, INFLATION EXPECTATIONS & LIQUIDITY TRENDS
     2. YIELD OUTLOOK (Short/Medium/Long)
     3. EQUITIES
     4. BONDS
@@ -144,16 +152,16 @@ def call_gemini(yields, history_df):
     6. COMMODITIES
     7. CASH & FX
     8. PORTFOLIO MIX, SCENARIOS & ACTIONABLE STRATEGY
-    9. THE HUMAN ANGLE (Wages, Real Earnings, & Housing)
+    9. THE HUMAN ANGLE (Wages, Real Earnings, & Consumer Expectations)
     """
     
     headers = {"Content-Type": "application/json"}
     
     models_to_try = [
-        "gemini-1.5-pro",         # 1st Choice: Stable flagship model (Best Analysis)
-        "gemini-1.5-pro-latest",  # 2nd Choice: Fallback to the bleeding-edge Pro model
-        "gemini-1.5-flash",       # 3rd Choice: Fast/Stable fallback if Pro hits rate limits
-        "gemini-2.5-flash"
+        "gemini-3.5-flash",         # 1st Choice: Stable flagship model (Best Analysis)
+        "gemini-2.5-pro",       # 3rd Choice: Fast/Stable fallback if Pro hits rate limits
+        "gemini-2.5-flash",
+        "gemini-3.1-flash-lite"
     ]
     
     for model in models_to_try:
@@ -164,7 +172,7 @@ def call_gemini(yields, history_df):
             "contents": [{"parts": [{"text": prompt}]}],
             "generationConfig": {
                 "maxOutputTokens": 16000,
-                "temperature": 0.8,
+                "temperature": 0.7, # Sharp, analytical tone
                 "topP": 0.95
             },
             "safetySettings": [
@@ -265,6 +273,7 @@ def main():
         "10Y_3M_spread": latest['10Y_3M_spread'],
         "10Y_2Y_spread": latest['10Y_2Y_spread'],
         "2Y_3M_spread": latest['2Y_3M_spread'],
+        # Inflation Expectations Data
         "EXPINF1YR": latest.get('EXPINF1YR'),
         "EXPINF2YR": latest.get('EXPINF2YR'),
         "EXPINF3YR": latest.get('EXPINF3YR'),
