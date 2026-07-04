@@ -1,4 +1,4 @@
-name: DeepSeek Yield Curve Report
+name: DeepSeek v4 Daily Macro Report
 
 on:
   schedule:
