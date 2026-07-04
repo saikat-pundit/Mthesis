@@ -3,147 +3,147 @@ from datetime import datetime
 from dotenv import load_dotenv
 import requests
 import pandas as pd
+from dateutil.relativedelta import relativedelta
 
 load_dotenv()
 
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 
-def safe_val(df, col, rows_back):
-    """Safely get historical values based on trading day offsets."""
-    if df is not None and col in df.columns and len(df) > rows_back:
-        val = df[col].iloc[-(rows_back + 1)]
-        return f"{val:.2f}" if pd.notnull(val) else "N/A"
-    return "N/A"
-
 def call_gemini(yields, history_df):
-    """Call Gemini with pre-calculated macro trends to save tokens and prevent math hallucinations."""
+    """Call Gemini with pre-calculated macro trends, CAGR, and 2-year raw data."""
     if not GEMINI_API_KEY:
         return "⚠️ No API key. Please set GEMINI_API_KEY."
 
-    # 1. Process historical data context (Shrunk from 365 to 30 days to save tokens)
-    if history_df is not None and len(history_df) > 0:
-        history_df = history_df.sort_values("date")
-        last_30 = history_df.tail(30)
-        yield_history = last_30.to_string(index=False)
-        latest_macro = history_df.iloc[-1]
-    else:
-        yield_history = "No historical data available."
-        latest_macro = {}
+    if history_df is None or history_df.empty:
+        return "⚠️ No historical data available for analysis."
 
-    # Calculate all 4 spreads
+    # 1. Setup DataFrame and Dates
+    df = history_df.copy()
+    df['date'] = pd.to_datetime(df['date'])
+    df = df.sort_values("date")
+    latest_date = df['date'].iloc[-1]
+
+    # Calculate current spreads
     s30_2 = yields.get('30Y', 0) - yields.get('2Y', 0)
     s10_2 = yields.get('10Y', 0) - yields.get('2Y', 0)
     s10_3 = yields.get('10Y', 0) - yields.get('3M', 0)
     s30_5 = yields.get('30Y', 0) - yields.get('5Y', 0)
-    
-    dxy = yields.get('DXY')
-    fedfunds = yields.get('FEDFUNDS')
-    dxy_str = f"{dxy:.2f}" if pd.notnull(dxy) else "N/A"
-    fed_str = f"{fedfunds:.2f}" if pd.notnull(fedfunds) else "N/A"
 
-    # Helper to safely format macro data
-    def fmt(val): 
-        return f"{val:.3f}" if pd.notnull(val) else "N/A"
+    # 2. Smart Historical Calculator (With CAGR & Momentum tracking)
+    def get_historical_metric(col, is_rate=False):
+        if col not in df.columns:
+            return f"{col}: N/A"
+        valid_df = df[['date', col]].dropna()
+        if valid_df.empty:
+            return f"{col}: N/A"
+            
+        curr_val = valid_df[col].iloc[-1]
+        
+        def get_val_at(months_back):
+            target_date = latest_date - relativedelta(months=months_back)
+            past_df = valid_df[valid_df['date'] <= target_date]
+            if not past_df.empty:
+                return past_df[col].iloc[-1]
+            return None
 
-    # 2. Pre-calculate Python Math for the AI (1W=5 days, 1M=21 days, 1Y=252 days)
-    macro_snapshot = f"""
-    --- CURRENT DATA vs 1 MONTH AGO vs 1 YEAR AGO ---
-    10Y Yield: {yields.get('10Y', 0):.2f}% (1M Ago: {safe_val(history_df, '10Y', 21)}%, 1Y Ago: {safe_val(history_df, '10Y', 252)}%)
-    2Y Yield: {yields.get('2Y', 0):.2f}% (1M Ago: {safe_val(history_df, '2Y', 21)}%, 1Y Ago: {safe_val(history_df, '2Y', 252)}%)
-    DXY (USD): {dxy_str} (1M Ago: {safe_val(history_df, 'DXY', 21)}, 1Y Ago: {safe_val(history_df, 'DXY', 252)})
+        val_1m = get_val_at(1)
+        val_1q = get_val_at(3)
+        val_1y = get_val_at(12)
+        val_2y = get_val_at(24)
+        
+        def calc_change(past_val, months_back):
+            if past_val is None or past_val == 0: return "N/A"
+            if is_rate:
+                bps = (curr_val - past_val) * 100
+                if months_back == 24:
+                    return f"{'+' if bps > 0 else ''}{bps:.0f} bps total ({'+' if bps/2 > 0 else ''}{bps/2:.0f} bps annualized)"
+                return f"{'+' if bps > 0 else ''}{bps:.0f} bps"
+            else:
+                pct = ((curr_val - past_val) / past_val) * 100
+                if months_back == 24:
+                    cagr = (((curr_val / past_val) ** 0.5) - 1) * 100
+                    return f"{'+' if cagr > 0 else ''}{cagr:.2f}% CAGR"
+                return f"{'+' if pct > 0 else ''}{pct:.2f}%"
+
+        return f"Current: {curr_val:.2f} | MoM: {calc_change(val_1m, 1)} | QoQ: {calc_change(val_1q, 3)} | YoY: {calc_change(val_1y, 12)} | 2-Year: {calc_change(val_2y, 24)}"
+
+    # 3. Generate Pre-Calculated Growth Metrics
+    macro_trends = f"""
+    --- GROWTH & RATE TRAJECTORIES (MoM, QoQ, YoY, 2-Year CAGR) ---
     
-    M2 Money Supply (Trillions): {fmt(latest_macro.get('M2SL'))} (1M Ago: {safe_val(history_df, 'M2SL', 21)}, 1Y Ago: {safe_val(history_df, 'M2SL', 252)})
-    Fed Balance Sheet - WALCL (Trillions): {fmt(latest_macro.get('WALCL'))} (1M Ago: {safe_val(history_df, 'WALCL', 21)})
-    Unemployment Rate: {fmt(latest_macro.get('UNRATE'))}% (1M Ago: {safe_val(history_df, 'UNRATE', 21)}%, 1Y Ago: {safe_val(history_df, 'UNRATE', 252)}%)
-    CPI (AUCSL): {fmt(latest_macro.get('CPIAUCSL'))} (1Y Ago: {safe_val(history_df, 'CPIAUCSL', 252)})
-    Nonfarm Payrolls (Millions): {fmt(latest_macro.get('PAYEMS'))}
+    YIELDS & RATES (Changes in Basis Points):
+    3M Yield: {get_historical_metric('3M', is_rate=True)}
+    2Y Yield: {get_historical_metric('2Y', is_rate=True)}
+    10Y Yield: {get_historical_metric('10Y', is_rate=True)}
+    30Y Yield: {get_historical_metric('30Y', is_rate=True)}
+    Fed Funds Rate: {get_historical_metric('FEDFUNDS', is_rate=True)}
+    
+    MACRO ECONOMY (Changes in Percentages):
+    GDP (Trillions): {get_historical_metric('GDP')}
+    Federal Debt (Trillions): {get_historical_metric('GFDEBTN')}
+    CPI Inflation Index: {get_historical_metric('CPIAUCSL')}
+    PPI Inflation Index: {get_historical_metric('PPIACO')}
+    US Dollar Index (DXY): {get_historical_metric('DXY')}
+    
+    LABOR, WAGES, & HOUSING (Changes in Percentages):
+    Unemployment Rate: {get_historical_metric('UNRATE', is_rate=True)}
+    Nonfarm Payrolls: {get_historical_metric('PAYEMS')}
+    Average Hourly Earnings (Wages): {get_historical_metric('AHE')}
+    Housing Supply (Months): {get_historical_metric('HOSINV')}
+    
+    LIQUIDITY (Changes in Percentages):
+    M2 Money Supply: {get_historical_metric('M2SL')}
+    Fed Balance Sheet (WALCL): {get_historical_metric('WALCL')}
+    """
+
+    # 4. Extract 2 Years of Raw Data for Context
+    two_years_ago = latest_date - relativedelta(years=2)
+    df_last_2_years = df[df['date'] >= two_years_ago]
+    raw_2y_data_str = df_last_2_years.to_string(index=False)
+
+    # 5. The Institutional Prompt
+    prompt = f"""
+    You are a top-tier macro strategist writing for an institutional client. I have pre-calculated the exact growth trajectories (MoM, QoQ, YoY, 2-Year CAGR) for the US economy, bond yields, and labor market, AND I am providing the raw 2-year timeline.
+
+    CURRENT SPREADS SNAPSHOT:
+    30Y-2Y={s30_2:.2f}%, 10Y-2Y={s10_2:.2f}%, 10Y-3M={s10_3:.2f}%, 30Y-5Y={s30_5:.2f}%
+    
+    DATA TRAJECTORIES:
+    {macro_trends}
+
+    RAW 2-YEAR HISTORICAL DATA:
+    {raw_2y_data_str}
+
+    Your mandate is to provide a complete, vivid, and highly authentic 360° analysis.
+
+    STRICT RULES FOR YOUR OUTPUT:
+    1. TONE & LUCIDITY: Your language must be lucid, direct, and accessible. Write like a seasoned Wall Street strategist—crisp and insightful, but easy to read. Do not use overly flowery prose or dramatic metaphors. Never explain economic jargon.
+    2. ADVANCED DATA WEAVING: Do not just quote raw numbers. You MUST use the provided CAGR (Compound Annual Growth Rate) or annualized basis points to describe the long-term trend, and juxtapose it directly against recent MoM or QoQ momentum to show if the trend is accelerating, stalling, or reversing. 
+    3. ASSET CLASS OUTLOOK & PREFERENCES (CRITICAL): For Equities, Bonds, Gold, Commodities, and FX, you MUST follow a two-part structure: 
+       - First, provide a concise, forward-looking forecast for the sector. 
+       - Second, explicitly list what to "PREFER" and what to "AVOID" with a crisp rationale tied to the data.
+    4. THE HUMAN ANGLE: Explicitly compare Average Hourly Earnings (wage growth) against CPI (inflation). Is Main Street's real purchasing power growing or shrinking? How is the current unemployment rate, combined with mortgage rates (implied by 10Y/30Y yields), impacting housing supply (HOSINV)?
+    
+    Structure your response exactly as follows:
+    1. MACROECONOMIC & LIQUIDITY TRENDS
+    2. YIELD OUTLOOK (Short/Medium/Long)
+    3. EQUITIES
+    4. BONDS
+    5. GOLD & PRECIOUS METALS
+    6. COMMODITIES
+    7. CASH & FX
+    8. PORTFOLIO MIX, SCENARIOS & ACTIONABLE STRATEGY
+    9. THE HUMAN ANGLE (Wages, Real Earnings, & Housing)
     """
     
-    prompt = f"""
-You are a top-tier macro strategist. Analyze the US Treasury yield curve and the comprehensive macroeconomic data using the dataset below.
-
-Last 30 days of raw yield data (for immediate momentum):
-{yield_history}
-
-Current Yields Snapshot: 
-3M={yields.get('3M', 0):.2f}%, 2Y={yields.get('2Y', 0):.2f}%, 5Y={yields.get('5Y', 0):.2f}%, 10Y={yields.get('10Y', 0):.2f}%, 30Y={yields.get('30Y', 0):.2f}%
-Spreads: 30Y-2Y={s30_2:.2f}%, 10Y-2Y={s10_2:.2f}%, 10Y-3M={s10_3:.2f}%, 30Y-5Y={s30_5:.2f}%
-Fed Funds Rate: {fed_str}%
-
-Pre-calculated Historical Trends:
-{macro_snapshot}
-
-Provide a complete, vivid, and highly authentic 360° analysis backed by the data provided.
-
-For your analysis, you MUST:
-- Analyze the Month-over-Month (MoM) and Year-over-Year (YoY) changes provided in the Pre-calculated Historical Trends section.
-- Include the rationale/mechanism behind every prediction (why, not just what).
-- Detail how global money flows and liquidity (M2/WALCL) are moving and impacting asset prices.
-- Use varied, institutional vocabulary.
-
-Do NOT include:
-- Any explanation of economic jargon (no footnotes, no definitions).
-- Duplicate display of yields or spreads.
-- Internal instructions or chain-of-thought processing.
-
-Structure your response exactly as follows:
-
-1. MACROECONOMIC & LIQUIDITY TRENDS
-   Detailed breakdown of MoM, and YoY changes in the provided macro data (CPI, M2, WALCL, Jobs). Analyze the current macro regime based on these shifts.
-
-2. YIELD OUTLOOK (Short/Medium/Long)
-   For each tenor and key spread, state the direction, historical trend, and rationale. Reference historical parallels.
-
-3. EQUITIES
-   Preferred/avoid sectors + regions with rationale. Mention valuation mechanics relative to the liquidity and employment data.
-
-4. BONDS
-   Preferred/avoid duration + credit quality. Explain why each is favored or avoided.
-
-5. GOLD & PRECIOUS METALS
-   Direction and rationale. Compare gold vs silver in the context of the current DXY, CPI, and Fed Balance Sheet trends.
-
-6. COMMODITIES
-   Energy, metals, agriculture – outlook and drivers.
-
-7. CASH & FX
-   USD direction and key FX pairs. Explain yield differentials and safe-haven flows.
-
-8. PORTFOLIO MIX & ACTIONABLE STRATEGY
-   a. Suggested allocation % (Equity, Bonds, Gold, Silver, Bitcoin, Cash)
-   b. Preferred equity theme and why
-   c. Avoid equity theme and why
-   d. Preferred bond duration and why
-   e. Avoid bond duration and why
-   f. Gold vs Silver vs Bitcoin – which one and why
-   g. Global money flow trend – where capital is moving
-
-9. SCENARIO ANALYSIS
-   Provide 2–3 plausible future scenarios (Base, Bull, Bear) for yields and markets over the next 12 months.
-   For each scenario, explicitly state:
-   - The specific future outlook
-   - The underlying rationale and macro triggers
-   - The precise probability of this outcome occurring
-
-For your analysis, you MUST follow these formatting constraints to ensure completion:
-1. Do NOT write long introduction or transition paragraphs. Go straight to the data points.
-2. Use concise, punchy, high-impact bullet points for all sub-sections.
-3. Explicitly weave in the pre-calculated MoM and YoY percentage/basis point changes inside those bullets.
-4. Keep descriptions dense with macro logic but physically short so all 9 sections fit perfectly.
-
-Do NOT include:
-- Any explanation of economic jargon (no footnotes, no definitions).
-- Duplicate display of yields or spreads.
-- Internal instructions or chain-of-thought processing.
-"""
     headers = {"Content-Type": "application/json"}
     
     models_to_try = [
-    "gemini-1.5-pro",         # 1st Choice: Stable flagship model (Best Analysis)
-    "gemini-1.5-pro-latest",  # 2nd Choice: Fallback to the bleeding-edge Pro model
-    "gemini-1.5-flash",        # 3rd Choice: Fast/Stable fallback if Pro hits rate limits
-    "gemini-2.5-flash"
-]
+        "gemini-1.5-pro",         # 1st Choice: Stable flagship model (Best Analysis)
+        "gemini-1.5-pro-latest",  # 2nd Choice: Fallback to the bleeding-edge Pro model
+        "gemini-1.5-flash",       # 3rd Choice: Fast/Stable fallback if Pro hits rate limits
+        "gemini-2.5-flash"
+    ]
     
     for model in models_to_try:
         print(f"🔄 Trying model: {model}...")
@@ -153,26 +153,14 @@ Do NOT include:
             "contents": [{"parts": [{"text": prompt}]}],
             "generationConfig": {
                 "maxOutputTokens": 8192,
-                "temperature": 0.7,
+                "temperature": 0.8,
                 "topP": 0.95
             },
             "safetySettings": [
-                {
-                    "category": "HARM_CATEGORY_HARASSMENT",
-                    "threshold": "BLOCK_NONE"
-                },
-                {
-                    "category": "HARM_CATEGORY_HATE_SPEECH",
-                    "threshold": "BLOCK_NONE"
-                },
-                {
-                    "category": "HARM_CATEGORY_SEXUALLY_EXPLICIT",
-                    "threshold": "BLOCK_NONE"
-                },
-                {
-                    "category": "HARM_CATEGORY_DANGEROUS_CONTENT",
-                    "threshold": "BLOCK_NONE"
-                }
+                {"category": "HARM_CATEGORY_HARASSMENT", "threshold": "BLOCK_NONE"},
+                {"category": "HARM_CATEGORY_HATE_SPEECH", "threshold": "BLOCK_NONE"},
+                {"category": "HARM_CATEGORY_SEXUALLY_EXPLICIT", "threshold": "BLOCK_NONE"},
+                {"category": "HARM_CATEGORY_DANGEROUS_CONTENT", "threshold": "BLOCK_NONE"}
             ]
         }
         
@@ -213,7 +201,7 @@ def generate_daily_report(yields, regime, confidence, explanation, history_df):
 
     return f"""
 ============================================================
-📅 YIELD CURVE DAILY REPORT - {yields['date']}
+📅 YIELD CURVE DAILY REPORT - {yields.get('date', 'Unknown Date')}
 ============================================================
 
 📊 YIELD DATA:
