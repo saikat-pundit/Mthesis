@@ -1,0 +1,64 @@
+name: DeepSeek Yield Curve Report
+
+on:
+  schedule:
+    # Runs at 5:00 AM UTC, Monday-Friday (30 minutes after Gemini)
+    - cron: '0 5 * * 1-5'
+  workflow_dispatch:
+
+# Unique concurrency group prevents this workflow from colliding with itself
+concurrency:
+  group: deepseek-report-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  generate-deepseek-report:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        fetch-depth: 1
+      
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.10'
+        cache: 'pip' 
+        
+    - name: Install dependencies
+      run: |
+        pip install --upgrade pip
+        pip install -r requirements.txt
+        
+    - name: Create directories
+      run: |
+        mkdir -p data
+        mkdir -p reports
+        
+    - name: Fetch full historical data
+      env:
+        FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
+      run: |
+        echo "📅 Ensuring data is up to date..."
+        python scripts/fetch_all_data.py
+        
+    - name: Run parallel DeepSeek yield report
+      env:
+        NVIDIA_API_KEY: ${{ secrets.NVIDIA_API_KEY }}
+      run: |
+        python scripts/deepseek_yield_report.py
+        
+    - name: Commit and push changes
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        git config --local user.email "github-actions[bot]@users.noreply.github.com"
+        git config --local user.name "github-actions[bot]"
+        git add data/ reports/
+        git diff --quiet && git diff --staged --quiet || git commit -m "DeepSeek daily yield report $(date +'%Y-%m-%d %H:%M:%S')"
+        git push
