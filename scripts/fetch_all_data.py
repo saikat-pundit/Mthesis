@@ -110,7 +110,18 @@ def fetch_all_data():
     all_series_data = {}
     for tenure, series_id in SERIES_MAP.items():
         print(f"  Fetching {tenure} ({series_id})...")
-        all_series_data[tenure] = fetch_bulk_series(series_id, start_date, end_date)
+        fetched_data = fetch_bulk_series(series_id, start_date, end_date)
+        
+        # ✅ FIX: Shift inflation expectations back to the last day of the previous month
+        if tenure.startswith("EXPINF"):
+            shifted_data = {}
+            for obs_date, val in fetched_data.items():
+                # Subtracting 1 day from the 1st of the month perfectly yields the previous month's end date
+                prev_month_last_day = (datetime.strptime(obs_date, "%Y-%m-%d") - timedelta(days=1)).strftime("%Y-%m-%d")
+                shifted_data[prev_month_last_day] = val
+            all_series_data[tenure] = shifted_data
+        else:
+            all_series_data[tenure] = fetched_data
     
     # Build new rows from merged data
     all_dates = set()
