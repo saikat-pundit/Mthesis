@@ -35,6 +35,8 @@ def main():
 
     # 3. Smart Historical Calculator (Handles Daily, Monthly, and Quarterly data)
     def get_historical_metric(col, is_rate=False):
+        if col not in df.columns:
+            return f"{col}: N/A"
         valid_df = df[['date', col]].dropna()
         if valid_df.empty:
             return f"{col}: N/A"
@@ -95,30 +97,38 @@ def main():
     Fed Balance Sheet (WALCL): {get_historical_metric('WALCL')}
     """
 
+    # Extract exactly 2 years of raw historical data
+    two_years_ago = latest_date - relativedelta(years=2)
+    df_last_2_years = df[df['date'] >= two_years_ago]
+    raw_2y_data_str = df_last_2_years.to_string(index=False)
+
     # 5. The Highly Constrained Prompt
     prompt = f"""
-    You are a top-tier macro strategist. I have pre-calculated the exact growth trajectories (MoM, QoQ, YoY, 2-Year) for the US economy, bond yields, and labor market.
+    You are a top-tier macro strategist. I have pre-calculated the exact growth trajectories (MoM, QoQ, YoY, 2-Year) for the US economy, bond yields, and labor market, AND I am providing the raw 2-year timeline.
     
     DATA TRAJECTORIES:
     {macro_trends}
+
+    RAW 2-YEAR HISTORICAL DATA:
+    {raw_2y_data_str}
 
     Your mandate is to provide a complete, vivid, and highly authentic 360° analysis.
 
     STRICT RULES FOR YOUR OUTPUT:
     1. NO RAW DATA DUMPING: Never just list out numbers or say "CPI is at X". You must WEAVE the growth percentages and basis point changes naturally into your sentences to prove a trend.
-    2. THE HUMAN ANGLE (Crucial): You MUST dedicate analysis to how the "Main Street" human is faring. Explicitly compare Average Hourly Earnings (wage growth) against CPI (inflation). Is their real purchasing power growing or shrinking? How is the current unemployment rate, combined with mortgage rates (implied by 10Y/30Y yields), impacting housing supply (HOSINV) and general consumer sentiment?
-    3. NO JARGON EXPLANATIONS: Do not define terms. Assume the reader is institutional.
-    4. RATIONALE REQUIRED: Every forward-looking prediction must be immediately followed by the specific data rationale behind it.
+    2. ASSET CLASS PREFERENCES (CRITICAL): For Equities, Bonds, Gold, Commodities, and FX, you MUST explicitly state what to "PREFER" (e.g., sectors, specific bond tenors, specific currencies) and what to "AVOID". Every preference/avoidance MUST be immediately justified using the provided growth/inflation/liquidity data.
+    3. THE HUMAN ANGLE (Crucial): You MUST dedicate analysis to how the "Main Street" human is faring. Explicitly compare Average Hourly Earnings (wage growth) against CPI (inflation). Is their real purchasing power growing or shrinking? How is the current unemployment rate, combined with mortgage rates (implied by 10Y/30Y yields), impacting housing supply (HOSINV) and general consumer sentiment?
+    4. NO JARGON EXPLANATIONS: Do not define terms. Assume the reader is institutional.
     5. BE PRECISE & EXHAUSTIVE: Ensure all 9 sections below are covered with dense, insightful logic.
 
     Structure your response exactly as follows:
-    1. MACROECONOMIC & LIQUIDITY TRENDS    
+    1. MACROECONOMIC & LIQUIDITY TRENDS
     2. YIELD OUTLOOK (Short/Medium/Long)
-    3. EQUITIES
-    4. BONDS
-    5. GOLD & PRECIOUS METALS
-    6. COMMODITIES
-    7. CASH & FX
+    3. EQUITIES (Must include Prefer/Avoid sectors)
+    4. BONDS (Must include Prefer/Avoid tenors)
+    5. GOLD & PRECIOUS METALS (Must include Prefer/Avoid)
+    6. COMMODITIES (Must include Prefer/Avoid)
+    7. CASH & FX (Must include Prefer/Avoid pairs)
     8. PORTFOLIO MIX, SCENARIOS & ACTIONABLE STRATEGY
     9. THE HUMAN ANGLE (Wages, Real Earnings, & Housing)
     """
@@ -130,20 +140,20 @@ def main():
         completion = client.chat.completions.create(
             model="deepseek-ai/deepseek-v4-pro",
             messages=[{"role": "user", "content": prompt}],
-            temperature=1.0,  # Elevated for creative/dynamic market narratives as requested
+            temperature=1.0,  # Elevated for creative/dynamic market narratives
             top_p=0.95,
             max_tokens=16384,
             extra_body={"chat_template_kwargs": {"thinking": False}},
             stream=True
         )
         
-        # 7. Handle the stream, print to console in real-time, and aggregate
+        # 7. Handle the stream and aggregate silently (keeps Actions logs clean)
         analysis_content = ""
         for chunk in completion:
             if chunk.choices[0].delta.content:
                 analysis_content += chunk.choices[0].delta.content
 
-        print("\n\n✅ Stream complete. Saving report...")
+        print("✅ Analysis generated successfully. Saving report...")
 
         # 8. Format and save output
         report = f"============================================================\n"
