@@ -155,7 +155,7 @@ def call_gemini(yields, history_df):
         payload = {
             "contents": [{"parts": [{"text": prompt}]}],
             "generationConfig": {
-                "maxOutputTokens": 8192,
+                "maxOutputTokens": 16000,
                 "temperature": 0.8,
                 "topP": 0.95
             },
