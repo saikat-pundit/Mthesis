@@ -112,15 +112,15 @@ def main():
     5. BE PRECISE & EXHAUSTIVE: Ensure all 9 sections below are covered with dense, insightful logic.
 
     Structure your response exactly as follows:
-    1. MACROECONOMIC & LIQUIDITY TRENDS
-    2. THE HUMAN ANGLE (Wages, Real Earnings, & Housing)
-    3. YIELD OUTLOOK (Short/Medium/Long)
-    4. EQUITIES
-    5. BONDS
-    6. GOLD & PRECIOUS METALS
-    7. COMMODITIES
-    8. CASH & FX
-    9. PORTFOLIO MIX, SCENARIOS & ACTIONABLE STRATEGY
+    1. MACROECONOMIC & LIQUIDITY TRENDS    
+    2. YIELD OUTLOOK (Short/Medium/Long)
+    3. EQUITIES
+    4. BONDS
+    5. GOLD & PRECIOUS METALS
+    6. COMMODITIES
+    7. CASH & FX
+    8. PORTFOLIO MIX, SCENARIOS & ACTIONABLE STRATEGY
+    9. THE HUMAN ANGLE (Wages, Real Earnings, & Housing)
     """
 
     print(f"🔄 Requesting analysis from deepseek-v4-pro (Streaming) for {date_str}...")
@@ -141,9 +141,7 @@ def main():
         analysis_content = ""
         for chunk in completion:
             if chunk.choices[0].delta.content:
-                text_chunk = chunk.choices[0].delta.content
-                analysis_content += text_chunk
-                print(text_chunk, end="", flush=True)
+                analysis_content += chunk.choices[0].delta.content
 
         print("\n\n✅ Stream complete. Saving report...")
 
