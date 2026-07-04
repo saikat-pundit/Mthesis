@@ -22,7 +22,7 @@ SERIES_MAP = {
     "FEDFUNDS": "RIFSPFFNB",
     # Weekly
     "WALCL": "WALCL",
-    # Monthly
+    # Monthly Macro
     "M2SL": "M2SL",
     "CPIAUCSL": "CPIAUCSL",
     "PPIACO": "PPIACO",
@@ -31,6 +31,12 @@ SERIES_MAP = {
     "PAYEMS": "PAYEMS",
     "JTSJOL": "JTSJOL",
     "HOSINV": "MSACSR",
+    # Inflation Expectations (Monthly)
+    "EXPINF1YR": "EXPINF1YR",
+    "EXPINF2YR": "EXPINF2YR",
+    "EXPINF3YR": "EXPINF3YR",
+    "EXPINF5YR": "EXPINF5YR",
+    "EXPINF10YR": "EXPINF10YR",
     # Quarterly
     "GDP": "GDP",
     "GFDEBTN": "GFDEBTN"
@@ -68,7 +74,7 @@ def get_last_recorded_date(filename="data/yield_history.csv"):
     return df["date"].max()
 
 def fetch_all_data():
-    """Fetch all data (yields + macro) from 2019-01-01 to today."""
+    """Fetch all data (yields + macro + inflation expectations) from 2019-01-01 to today."""
     filename = "data/yield_history.csv"
     
     # If CSV doesn't exist, create empty with full headers
@@ -77,7 +83,8 @@ def fetch_all_data():
             "date", "3M", "2Y", "5Y", "10Y", "30Y", 
             "DXY", "FEDFUNDS", "M2SL", "WALCL",
             "GDP", "GFDEBTN", "CPIAUCSL", "PPIACO", 
-            "AHE", "UNRATE", "PAYEMS", "JTSJOL", "HOSINV"
+            "AHE", "UNRATE", "PAYEMS", "JTSJOL", "HOSINV",
+            "EXPINF1YR", "EXPINF2YR", "EXPINF3YR", "EXPINF5YR", "EXPINF10YR"
         ])
         df_empty.to_csv(filename, index=False)
         print("✅ Created empty CSV with headers.")
@@ -139,9 +146,11 @@ def fetch_all_data():
         if col in df_new.columns:
             df_new[col] = (df_new[col] / 1000.0).round(3)
     
-    # ✅ FIX: Keep daily yields intact, only group monthly/quarterly columns
-    monthly_cols = ["M2SL", "CPIAUCSL", "PPIACO", "AHE", "UNRATE", "PAYEMS", "JTSJOL", "HOSINV", "GDP", "GFDEBTN"]
-    daily_cols = ["3M", "2Y", "5Y", "10Y", "30Y", "DXY", "FEDFUNDS", "WALCL"]
+    # ✅ INCLUDED: Inflation expectation indicators alongside standard monthly/quarterly metrics
+    monthly_cols = [
+        "M2SL", "CPIAUCSL", "PPIACO", "AHE", "UNRATE", "PAYEMS", "JTSJOL", "HOSINV", "GDP", "GFDEBTN",
+        "EXPINF1YR", "EXPINF2YR", "EXPINF3YR", "EXPINF5YR", "EXPINF10YR"
+    ]
     
     # For monthly/quarterly columns: keep only last day of each month
     for col in monthly_cols:
@@ -184,7 +193,12 @@ def save_to_csv(yields_dict, filename="data/yield_history.csv"):
         "UNRATE": yields_dict.get("UNRATE"),
         "PAYEMS": yields_dict.get("PAYEMS"),
         "JTSJOL": yields_dict.get("JTSJOL"),
-        "HOSINV": yields_dict.get("HOSINV")
+        "HOSINV": yields_dict.get("HOSINV"),
+        "EXPINF1YR": yields_dict.get("EXPINF1YR"),
+        "EXPINF2YR": yields_dict.get("EXPINF2YR"),
+        "EXPINF3YR": yields_dict.get("EXPINF3YR"),
+        "EXPINF5YR": yields_dict.get("EXPINF5YR"),
+        "EXPINF10YR": yields_dict.get("EXPINF10YR")
     }
     df_new = pd.DataFrame([row])
     
@@ -229,3 +243,5 @@ __all__ = [
     'save_to_csv',
     'load_history'
 ]
+
+```
