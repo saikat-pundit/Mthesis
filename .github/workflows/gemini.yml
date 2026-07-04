@@ -1,4 +1,4 @@
-name: Gemini Daily Macro_Report
+name: Gemini Daily Macro Report
 
 on:
   schedule:
