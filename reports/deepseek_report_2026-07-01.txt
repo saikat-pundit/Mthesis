@@ -3,61 +3,96 @@
 ============================================================
 
 📋 AI ANALYSIS:
-1. MACROECONOMIC & LIQUIDITY TRENDS
-The US economy is delivering robust nominal GDP growth of 4.53% year-over-year and a 4.56% two-year CAGR, but strip out CPI inflation running at 3.90% YoY and real growth is barely positive—roughly 0.6% recently, with a two-year average closer to 1.3%. That’s a classic late-cycle stagflationary mix: high nominal figures masking weak real activity. Federal debt is ballooning at 7.88% YoY (5.90% CAGR), outpacing GDP and pushing debt/GDP higher, which feeds directly into long-end yield pressure. On the inflation front, the CPI index at 333.98 shows a worrying re-acceleration: the quarterly gain of 1.12% annualizes to ~4.5%, while PPI is screaming at +5.99% QoQ (24% annualized) and +12.29% YoY. Pipeline pressures are intense and have not yet fully passed through to consumers. Over two years, CPI CAGR is 3.29% versus PPI at 6.91%, so the worst may be ahead.
+**1. MACROECONOMIC, INFLATION EXPECTATIONS & LIQUIDITY TRENDS**  
+Nominal GDP is running at $31.87 trillion, with a 2‑year CAGR of +4.56% – a pace that still reflects a large inflation contribution. Federal debt is expanding faster (2‑year CAGR +5.90%, YoY +7.88%), widening the fiscal gap. Actual CPI inflation sits at 3.90% YoY, well above the 2‑year CAGR of 3.29%, signaling that the disinflation trend has stalled. PPI is far more alarming: +12.29% YoY, with a 2‑year CAGR of 6.91%, pointing to persistent pipeline pressure that will challenge any rapid CPI moderation.
 
-Liquidity is ample but shifting. M2 money stock is growing at 5.07% YoY (4.60% CAGR), while the Fed’s balance sheet, though down 3.56% CAGR over two years, has recently turned expansionary: +0.31% month-over-month, +0.75% quarter-over-quarter, and +0.95% YoY. The Fed has quietly moved from QT to mild QE, likely to support Treasury markets or bank reserves, adding fuel to both asset prices and inflation. The US Dollar Index sits at 120.08, flat YoY but down 1.35% annualized over two years—a gentle, persistent erosion that supports commodities and gold.
+Forward inflation expectations tell a split story. The 1‑year expectation (3.02%) is 88 bp below actual CPI, while the 2‑year expectation (2.75%) is 54 bp below the realized 2‑year CPI CAGR. The market is betting on a sharp deceleration that has yet to materialize. The 5‑year (2.54%) and 10‑year (2.49%) expectations remain anchored but are edging higher on a 2‑year basis (+7 bp and +6 bp annualized, respectively). This gradual upward drift in long‑run expectations, combined with hot PPI, is the macro tripwire.
 
-2. YIELD OUTLOOK (Short/Medium/Long)
-The yield curve is upward-sloping and non-inverted, but recent momentum is distinctly bearish for bonds. The 3-month yield at 3.85% is up 7 bps MoM and 15 bps QoQ, though still down 55 bps from a year ago, reflecting past Fed cuts. The 2-year yield at 4.17% tells a different story: +12 bps MoM, +36 bps QoQ, and +39 bps YoY. Despite the Fed holding at 3.63%, the market is aggressively repricing the short end higher, anticipating either inflation-driven hikes or a prolonged pause. The 10-year yield at 4.48% is up 15 bps QoQ and 22 bps YoY, but flat over two years—its recent drift higher is gaining momentum. The 30-year yield at 4.97% has added 6 bps QoQ, 19 bps YoY, and 33 bps over two years (+17 bps annualized), reflecting structural term premium from fiscal deficits and inflation uncertainty.
+Liquidity is mixed. M2 is growing at a 5.07% YoY pace (2‑year CAGR +4.60%), not restrictive but not fueling excess. The Fed’s balance sheet, however, has shrunk at a -3.56% annualized rate over two years, though the recent MoM (+0.31%) and QoQ (+0.75%) show stabilization. Overall, financial conditions are neutral‑to‑slightly‑tight, with the 10Y‑3M spread at +63 bp (no inversion) and the 10Y‑2Y spread at +31 bp – a modestly positive slope that does not price recession but leaves little cushion against a growth scare.
 
-Key spreads: 10Y-2Y at 31 bps (positive, but narrowing as the 2Y rises faster—bear flattening). 10Y-3M at 63 bps (no recession signal). 30Y-2Y at 80 bps—steep, signaling ample liquidity but also inflation premium. The overall message: the curve is normal but under upward pressure, with short-to-intermediate yields rising fastest, consistent with a market bracing for higher rates.
+**2. YIELD OUTLOOK (Short/Medium/Long)**  
+The short‑end is caught between a Fed that has cut 70 bp over the past year (Fed Funds at 3.63%) and a market demanding a premium. The 3M yield (3.85%) is 22 bp above Fed Funds, and the 2Y yield (4.17%) has risen +39 bp YoY despite those cuts – a clear signal that the market expects the easing cycle to be over or even partially reversed. The 3M‑2Y spread is a narrow +32 bp, reflecting a flat front‑end that often precedes a policy pivot.
 
-3. EQUITIES
-Current scenarios and forward-looking forecast: Nominal GDP growth near 4.5% provides a tailwind for revenues, but PPI up 12.29% YoY and wages up 3.52% are squeezing margins. The equity risk premium over 10-year Treasuries is thin. If inflation forces the Fed to reverse course, valuations—especially for long-duration growth stocks—will compress sharply. The base case is a grind higher in equities led by nominal earnings, but with elevated volatility and sector rotation.
+The long‑end is anchored but creeping: 10Y at 4.48% (2‑year CAGR flat) and 30Y at 4.97% (+17 bp annualized over two years). Real yields are positive and meaningful – roughly 1.99% on the 10Y (using 10Y expected inflation 2.49%) and 1.42% on the 2Y. The 30Y‑2Y spread (global liquidity proxy) is 80 bp, and the 30Y‑5Y spread is 73 bp, both indicating a modest term premium consistent with fiscal supply concerns, not a growth boom.
 
-- PREFER: Value and cyclical sectors (energy, materials, industrials) that benefit from nominal growth and can pass through input costs; companies with strong pricing power.
-- AVOID: Long-duration growth stocks (tech, high-multiple consumer discretionary) sensitive to rising real yields; sectors with high labor cost exposure and weak pricing power.
+The inflation expectations nexus is critical: the 1Y‑2Y expected inflation spread is +27 bp (3.02% vs. 2.75%), meaning the market prices higher near‑term inflation. That keeps front‑end yields elevated and prevents a bull steepening. If actual CPI fails to converge toward 2.75%, the entire curve will reprice higher, led by the 2Y‑5Y segment.
 
-4. BONDS
-Current scenarios and forward-looking forecast: Yields are rising across the curve, with the 2Y up 36 bps QoQ leading the charge. Inflation breakevens are widening, and real yields remain modestly positive (10Y minus CPI ~0.58%). If PPI passes through to CPI, nominal yields could spike further, particularly at the long end. The Fed’s balance sheet expansion may cap long yields temporarily, but the fiscal supply overhang and inflation momentum argue for higher rates. Bonds are in a structural bear market until inflation peaks convincingly.
+**3. EQUITIES**  
+*Current scenario & forecast:* Nominal GDP growth supports top‑line revenues, but the real yield backdrop is challenging. With 10Y real yields near 2%, the equity risk premium is compressed, making bonds a viable competitor. The PPI surge squeezes margins for firms without pricing power, while the housing supply glut (months’ supply at 10.30, 2‑year CAGR +12.08%) hints at weakening durable goods demand. Liquidity from M2 is steady but not expanding fast enough to lift all boats. The modest 10Y‑2Y spread (31 bp) historically coincides with choppy, range‑bound equity markets rather than runaway bulls.
 
-- PREFER: Short-duration Treasuries (1-3 year), TIPS, floating-rate notes.
-- AVOID: Long-duration nominal Treasuries (10Y, 30Y), long-dated investment-grade corporates.
+*PREFER:*  
+- **Industrials, energy, and materials** – sectors that benefit from reshoring, infrastructure spending, and can pass through PPI‑driven input costs.  
+- **Value and low‑duration equities** – companies with strong cash flows and near‑term earnings visibility, less sensitive to the 10Y real rate.  
+- **Equity sectors tied to commodities** – given the PPI tailwind.
 
-5. GOLD & PRECIOUS METALS
-Current scenarios and forward-looking forecast: Real yields are slightly positive, which is not ideal for gold, but the PPI explosion and dollar weakness (DXY -1.35% CAGR) provide offsetting support. Inflation uncertainty is high, and the Fed’s quiet QE adds to the case for hard assets. If real yields turn negative or inflation expectations unanchor, gold could rally strongly. In a bear case where the Fed hikes aggressively, gold would initially spike on panic then fade as real yields rise.
+*AVOID:*  
+- **Long‑duration growth/tech** – high valuations are vulnerable to a 2% real yield; the 30Y‑2Y spread widening could further hurt growth multiples.  
+- **Consumer discretionary** – real wage growth has turned negative MoM/YoY, and housing supply suggests consumer durables spending will slow.
 
-- PREFER: Gold, silver as inflation hedges and portfolio diversifiers.
-- AVOID: Not applicable in precious metals, but avoid overconcentration if real yields spike rapidly.
+**4. BONDS**  
+*Current scenario & forecast:* The yield curve is modestly steep with a 30Y‑2Y spread of 80 bp, not extreme but offering some term premium. Short‑end yields above Fed Funds imply limited scope for further rate cuts; if inflation expectations remain elevated, the 2Y could push toward 4.50%. Inflation expectations anchor the long‑end, but the 10Y breakeven (2.49%) is vulnerable to an upside surprise given PPI. Real yields are attractive for buy‑and‑hold investors, but duration risk is real if the 30Y‑5Y spread widens on fiscal concerns.
 
-6. COMMODITIES
-Current scenarios and forward-looking forecast: PPI up 12.29% YoY and 5.99% QoQ signals broad commodity strength. This is a late-cycle commodity boom fueled by supply constraints, geopolitics, and restocking. Global nominal demand remains firm, and the weak dollar adds a bid. Risks include demand destruction from high prices or a growth shock, but the base case is elevated commodity indices.
+*PREFER:*  
+- **Short‑duration Treasuries (1‑3 years)** – capture 4%+ yields with minimal duration risk; the 1Y‑2Y expected inflation spread keeps front‑end yields supported.  
+- **TIPS (inflation‑linked bonds)** – actual CPI running above 1Y and 2Y expectations means breakevens could widen; TIPS offer direct protection.  
+- **Floating‑rate notes** – benefit if the 3M‑FF spread persists or widens.
 
-- PREFER: Energy, agriculture, industrial metals (copper).
-- AVOID: Commodities heavily exposed to a potential China slowdown (if relevant), or those with extreme speculative positioning.
+*AVOID:*  
+- **Long‑duration nominal bonds (20Y‑30Y)** – the 2‑year annualized increase in 30Y yields (+17 bp) and rising federal debt supply argue for higher term premium.  
+- **Unhedged foreign sovereign bonds** – DXY stabilizing and US real yields attractive reduce the relative appeal.
 
-7. CASH & FX
-Current scenarios and forward-looking forecast: Fed funds at 3.63% offer a decent nominal yield, but real returns are negative (-0.27% after CPI). Cash is a safe harbor but erodes purchasing power. The dollar is in a mild structural downtrend (2Y CAGR -1.35%), and US inflation outperformance versus peers could accelerate that decline. Central bank diversification and commodity strength favor non-USD currencies.
+**5. GOLD & PRECIOUS METALS**  
+*Current scenario & forecast:* Gold faces a tug‑of‑war. The DXY’s 2‑year decline (-1.35% CAGR) has been a tailwind, but the recent QoQ stabilization (+0.88%) and flat MoM suggest that support is fading. Real yields are a headwind: 10Y real at ~1.99% raises the opportunity cost of holding gold. However, inflation expectations are below actual CPI, meaning if the “catch‑up” trade gains traction, gold could rally as an inflation‑expectations hedge. Fiscal debt expansion (2‑year CAGR +5.90%) adds a sovereign risk bid.
 
-- PREFER: Commodity-linked currencies (AUD, CAD, NOK), currencies of countries with tighter monetary policy.
-- AVOID: Overweight USD cash as a long-term holding; unhedged USD fixed-income exposure.
+*PREFER:*  
+- **Physical gold and gold miners** – as a portfolio hedge against a de‑anchoring of inflation expectations or a fiscal confidence shock.  
+- **Silver** – often plays catch‑up in an industrial/inflationary late‑cycle phase, supported by PPI trends.
 
-8. PORTFOLIO MIX, SCENARIOS & ACTIONABLE STRATEGY
-**Base Case (55% probability):** Sticky inflation with CPI ~4%, PPI moderates but stays high. Real GDP growth ~1%. Fed holds at 3.63% through year-end, balance sheet flat. 10Y yield drifts to 4.50–4.75%. Equities grind higher on nominal earnings, but volatility persists. Commodities and gold outperform. Bonds range-bound with a bearish tilt.
+*AVOID:*  
+- **Overweighting gold if 10Y real yields break above 2.25%** – at that level, the opportunity cost becomes punitive without a simultaneous DXY breakdown.
 
-**Bull Case (20%):** PPI surge proves transitory; CPI falls to 2.5–3%. Real growth accelerates to 2%+. Fed cuts further to 3% or below. 10Y yield drops to 4% or lower. Equities rally strongly, growth stocks recover. Bonds rally. Dollar weakens further.
+**6. COMMODITIES**  
+*Current scenario & forecast:* PPI inflation of +12.29% YoY (2‑year CAGR +6.91%) screams commodity strength. Energy and industrial inputs are likely still elevated, driven by supply constraints and geopolitical friction. Global nominal GDP growth near 4.5% provides demand support. DXY stabilization may cap the dollar‑denominated upside, but the underlying supply‑demand balance favors commodities. The 5Y and 10Y inflation expectations are drifting up, which often coincides with commodity index outperformance.
 
-**Bear Case (25%):** PPI fully passes through; CPI spikes to 5%+. Fed forced to hike to 4–5%. 10Y yield surges above 5%, curve inverts. Real growth stalls, unemployment rises. Equities drop 20%+, credit spreads widen. Long bonds crash. Gold initially spikes then retreats as real yields soar. Cash becomes king.
+*PREFER:*  
+- **Energy (oil, natural gas)** – tight supply and PPI momentum.  
+- **Industrial metals (copper, aluminum)** – linked to infrastructure and electrification, with PPI pass‑through.  
+- **Agricultural commodities** – weather disruptions and rising input costs.
 
-**Actionable Strategy:**
-- *Risky Investor:* Overweight equities (tilt value/cyclical), commodities, gold. Underweight bonds; use only short-duration or TIPS. Tactical long commodity currencies.
-- *Conservative Investor:* Favor short-duration Treasuries, TIPS, gold, and cash. Reduce equity exposure to defensive sectors (healthcare, staples). Avoid long bonds entirely.
-- *Balanced Investor:* 50% equities (value bias), 20% commodities/gold, 20% short-duration bonds/TIPS, 10% cash. Diversify FX exposure away from pure USD.
+*AVOID:*  
+- **Commodities highly sensitive to Chinese demand** if global growth slows; watch the 10Y‑3M spread for recession signals (currently safe at +63 bp).
 
-9. THE HUMAN ANGLE (Wages, Real Earnings, & Housing)
-Average hourly earnings at $37.64 are up 3.52% YoY, but CPI is up 3.90%, meaning real wages are shrinking by 0.38% year-over-year. Over a two-year horizon, wages (3.69% CAGR) barely outpaced CPI (3.29% CAGR), but the recent trend has turned negative. Main Street is losing purchasing power, squeezing consumption, especially for lower-income households. This dynamic erodes consumer confidence and limits the economy’s real growth potential.
+**7. CASH & FX**  
+*Current scenario & forecast:* Cash returns are competitive. With Fed Funds at 3.63% and 1Y expected inflation at 3.02%, real cash yields are positive (+0.61%). The DXY’s 2‑year decline has stalled; QoQ +0.88% and MoM flat suggest a base‑building. The US real yield advantage (10Y real ~1.99%) versus peers supports the dollar, especially if the Fed stays on hold while others cut. The 2Y yield spread vs. major counterparts is likely wide, favoring USD carry.
 
-Housing supply has surged to 10.3 months—up 14.44% YoY and a staggering 12.08% CAGR over two years. With 30-year yields at 4.97%, mortgage rates are likely in the 6.5–7% range, crushing affordability. Despite a low 4.2% unemployment rate, housing demand is buckling under high financing costs, leading to a sharp inventory build. This will eventually feed into softer shelter inflation, but the lag is long. In the near term, the housing market is a source of financial stress for households and a headwind for construction employment, amplifying the stagflationary pulse.
+*PREFER:*  
+- **USD cash and short‑dated USD deposits** – positive real yield and safety in a potential bear steepening.  
+- **USD vs. euro, yen, and EM currencies** – the real yield differential and stable DXY trend favor the dollar.
+
+*AVOID:*  
+- **Long EM FX positions** – if the 10Y‑3M spread were to invert, risk appetite would collapse, but even now, carry‑to‑risk ratios are less attractive with DXY stabilizing.  
+- **Overweighting non‑USD cash** unless a clear DXY breakdown resumes.
+
+**8. PORTFOLIO MIX, SCENARIOS & ACTIONABLE STRATEGY**  
+*Base Case (60% probability): Soft landing maintained.*  
+Inflation gradually decelerates toward 2.7‑3.0% as PPI pressures ease; the Fed holds at 3.63% through mid‑2026. The yield curve stays modestly positive, 10Y ranges 4.25‑4.65%. Equities grind higher with nominal earnings growth; credit spreads remain contained. Gold and commodities trade sideways. DXY stable.
+
+*Bull Case (20%): “Immaculate disinflation.”*  
+CPI drops sharply to 2.5%, aligning with 2Y expectations; the Fed cuts another 50 bp. 2Y yields fall to 3.80%, 10Y to 4.00%, sparking a powerful equity rally led by growth stocks. DXY weakens, gold surges as real yields decline. Requires PPI to collapse – a low‑probability tail risk.
+
+*Bear Case (20%): Stagflationary second wave.*  
+PPI feeds into CPI, pushing actual inflation above 4.5% and de‑anchoring expectations. The 1Y expected inflation jumps to 3.75%, forcing the Fed to hike. 2Y yields spike to 4.75%, 10Y to 5.25%, and the 30Y‑2Y spread blows out to 150 bp on fiscal fears. Equities sell off >15%, credit widens, gold initially rises then falls as real yields soar. DXY spikes on safe‑haven flows.
+
+*Actionable Strategy:*  
+- **Risky Investor:** Overweight equities (cyclicals, energy, materials), underweight long bonds, hold gold (5‑10%) and commodity exposure. Use modest leverage via options if volatility is low.  
+- **Conservative Investor:** Laddered short‑duration Treasuries and TIPS (50%+), cash (20%), minimal equities (20% defensive), gold (10%). Avoid long bonds entirely.  
+- **Balanced Investor:** 50% equities (tilted to value/cyclicals), 40% fixed income (short‑duration + TIPS), 10% gold/commodities. Rebalance if 10Y‑3M spread turns negative.
+
+**9. THE HUMAN ANGLE (Wages, Real Earnings, & Consumer Expectations)**  
+Average hourly earnings are growing at 3.52% YoY (2‑year CAGR +3.69%), but actual CPI inflation is 3.90%. That leaves real wage growth negative at -0.38% over the past year, though the 2‑year CAGR shows a slight real gain of +0.40% annualized. Main Street’s purchasing power is eroding at the margin, and the 1Y inflation expectation of 3.02% suggests consumers are bracing for only modest relief – a gap that could fuel precautionary saving and dampen spending.
+
+The unemployment rate is low at 4.2% (2‑year change just +5 bp annualized), so job security is not the immediate worry. The pressure point is housing. With the 30Y yield at 4.97% and the 10Y at 4.48%, mortgage rates likely sit near 6.5‑7.0%. That has pushed housing supply to 10.3 months (2‑year CAGR +12.08%), a level historically associated with falling home prices. Real wage compression plus high financing costs are forcing potential buyers to the sidelines, and the inventory overhang will eventually weigh on construction employment and consumer durables demand.
+
+Consumers are not panicked, but they are adjusting. The spread between actual inflation and their 1Y expectations (3.90% vs. 3.02%) will be the critical sentiment driver: if CPI fails to decline in the next 3‑6 months, confidence could crack, turning a soft landing into something harder.
 ============================================================
-✅ 2026-07-04 02:53:29 | NVIDIA DeepSeek-V4-Pro
+✅ 2026-07-04 13:36:39 | NVIDIA DeepSeek-V4-Pro
