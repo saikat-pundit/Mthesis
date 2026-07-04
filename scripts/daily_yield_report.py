@@ -59,7 +59,7 @@ def main():
     # Save report to file
     report_dir = "reports"
     os.makedirs(report_dir, exist_ok=True)
-    report_file = f"{report_dir}/report_{date}.txt"
+    report_file = f"{report_dir}/gemini_report_{date}.txt"
     
     # Write the file (automatically overwrites if exists)
     with open(report_file, 'w') as f:
