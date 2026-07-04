@@ -2,7 +2,7 @@ import os
 import sys
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
-# ✅ FIX: Changed import from the missing 'fetch_yields' to 'fetch_all_data'
+# From the updated data fetching script
 from fetch_all_data import fetch_all_data, load_history
 from analyze_regime import compute_spreads, classify_regime
 from gemini import generate_daily_report
@@ -10,7 +10,7 @@ from gemini import generate_daily_report
 def main():
     print("🚀 Starting daily yield curve report...")
     
-    # ✅ FIX: Use the correct function to load/update data
+    # Use the correct function to load/update data
     df = fetch_all_data()
     
     if df is None or df.empty:
@@ -26,7 +26,7 @@ def main():
     
     print(f"📅 Using latest available data: {date}")
     
-    # Prepare yields dict for report
+    # Prepare yields dict for report (Incorporating Inflation Expectations)
     yields = {
         "date": date,
         "3M": latest['3M'],
@@ -38,7 +38,14 @@ def main():
         "FEDFUNDS": latest.get('FEDFUNDS'),
         "10Y_3M_spread": latest['10Y_3M_spread'],
         "10Y_2Y_spread": latest['10Y_2Y_spread'],
-        "2Y_3M_spread": latest['2Y_3M_spread']
+        "2Y_3M_spread": latest['2Y_3M_spread'],
+        
+        # ✅ NEW: Forward Inflation Expectations metrics extracted safely
+        "EXPINF1YR": latest.get('EXPINF1YR'),
+        "EXPINF2YR": latest.get('EXPINF2YR'),
+        "EXPINF3YR": latest.get('EXPINF3YR'),
+        "EXPINF5YR": latest.get('EXPINF5YR'),
+        "EXPINF10YR": latest.get('EXPINF10YR')
     }
     
     # Classify regime
