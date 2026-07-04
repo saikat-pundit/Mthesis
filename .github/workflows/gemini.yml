@@ -8,7 +8,7 @@ on:
 
 # Prevents simultaneous runs from colliding when pushing to git
 concurrency:
-  group: daily-report-${{ github.ref }}
+  group: Gemini-daily-report-${{ github.ref }}
   cancel-in-progress: false
 
 jobs:
