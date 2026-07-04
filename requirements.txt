@@ -9,7 +9,7 @@ huggingface_hub
 # Core Data Manipulation
 pandas==2.2.1
 numpy==1.26.4
-
+openai==1.14.3
 # API and Environment 
 requests==2.31.0
 python-dotenv==1.0.1
