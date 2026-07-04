@@ -6,7 +6,7 @@ from openai import OpenAI
 from dateutil.relativedelta import relativedelta
 
 def main():
-    print("🚀 Starting parallel DeepSeek-v4-Pro yield report...")
+    print("🚀 Starting parallel Qwen yield report...")
     
     # 1. Setup API Client
     NVIDIA_API_KEY = os.getenv("NVIDIA_API_KEY")
@@ -153,10 +153,9 @@ def main():
         completion = client.chat.completions.create(
             model="qwen/qwen3.5-122b-a10b",
             messages=[{"role": "user", "content": prompt}],
-            temperature=0.8,  # Slightly lowered to keep the tone lucid and precise rather than overly creative
+            temperature=0.60, 
             top_p=0.95,
-            max_tokens=30000,
-            extra_body={"chat_template_kwargs": {"thinking": True}},
+            max_tokens=16384,
             stream=True
         )
         
@@ -172,8 +171,7 @@ def main():
         report += f"============================================================\n\n"
         report += f"📋 AI ANALYSIS:\n{analysis_content}\n"
         report += f"============================================================\n"
-        report += f"✅ {datetime.now().strftime('%Y-%m-%d %H:%M:%S')} | qwen3.5-122b-a10b
-\n"
+        report += f"✅ {datetime.now().strftime('%Y-%m-%d %H:%M:%S')} | qwen3.5-122b-a10b\n"
 
         report_dir = "reports"
         os.makedirs(report_dir, exist_ok=True)
@@ -184,7 +182,7 @@ def main():
         print(f"📄 Qwen report saved to: {report_file}")
 
     except Exception as e:
-        print(f"\n⚠️ NVIDIA DeepSeek API error: {e}")
+        print(f"\n⚠️ NVIDIA Qwen API error: {e}")
 
 if __name__ == "__main__":
     main()
