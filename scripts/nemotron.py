@@ -173,18 +173,14 @@ def main():
             reasoning = getattr(chunk.choices[0].delta, "reasoning_content", None)
             if reasoning:
                 reasoning_content_full += reasoning
-                print(reasoning, end="", flush=True)
                 
             # Capture the Final Analysis content
             content = chunk.choices[0].delta.content
             if content is not None:
                 # Add a visual separator in the console when transitioning from thinking to answering
                 if reasoning_content_full and not analysis_content_full:
-                    print("\n------------------------------\n")
-                    print("--- Final Analysis (Live) ---")
                 
                 analysis_content_full += content
-                print(content, end="", flush=True)
 
         print("\n✅ Analysis generated successfully. Saving report...")
 
