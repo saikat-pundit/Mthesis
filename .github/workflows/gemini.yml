@@ -61,7 +61,7 @@ jobs:
           echo "run_ai=true" >> $GITHUB_OUTPUT
         fi
         
-    - name: Run parallel Qwen yield report
+    - name: Run parallel Gemini yield report
       if: steps.fetch_step.outputs.run_ai == 'true'
       env:
         NVIDIA_API_KEY: ${{ secrets.NVIDIA_API_KEY }}
