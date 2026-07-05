@@ -31,19 +31,34 @@ def fetch_usdinr_data(start_date, end_date):
             print(f"Response: {response.text[:500]}")
             return {}
         
-        # Parse CSV response
+        # Remove BOM and parse CSV
+        text = response.text
+        if text.startswith('\ufeff'):
+            text = text[1:]  # Remove BOM
+        
+        # Parse CSV
         usdinr_data = {}
-        csv_reader = csv.DictReader(StringIO(response.text))
+        lines = text.strip().split('\n')
         
-        print(f"CSV headers: {csv_reader.fieldnames}")
+        # Get headers from first line (remove quotes and spaces)
+        header_line = lines[0].strip()
+        headers = [h.strip().strip('"') for h in header_line.split(',')]
+        print(f"Cleaned headers: {headers}")
         
-        for row in csv_reader:
-            date_str = row.get('Trade Date', '').strip()
+        # Parse data rows
+        for line in lines[1:]:
+            if not line.strip():
+                continue
+            values = [v.strip().strip('"') for v in line.split(',')]
+            if len(values) != len(headers):
+                continue
+            
+            date_str = values[0]  # Trade Date
             if date_str:
                 try:
                     date_obj = datetime.strptime(date_str, '%d-%b-%Y')
                     date_key = date_obj.strftime('%d%m%Y')
-                    usdinr_value = row.get('1 USD ', '0').strip()
+                    usdinr_value = values[1]  # 1 USD
                     if usdinr_value:
                         usdinr_data[date_key] = float(usdinr_value)
                         print(f"Date: {date_key}, USDINR: {usdinr_value}")
