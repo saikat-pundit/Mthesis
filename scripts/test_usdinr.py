@@ -1,12 +1,14 @@
+# script/test_usdinr.py
 import requests
-import json
+import csv
+from io import StringIO
 from datetime import datetime
 
 def fetch_usdinr_data(start_date, end_date):
     url = f"https://www.nseindia.com/api/historicalOR/rbi-reference-rate-stats?from={start_date}&to={end_date}&csv=true"
     
     headers = {
-        'Accept': 'application/json, text/plain, */*',
+        'Accept': 'text/csv,application/json,text/plain, */*',
         'Accept-Encoding': 'identity',
         'Accept-Language': 'en-US,en;q=0.5',
         'Connection': 'keep-alive',
@@ -29,29 +31,27 @@ def fetch_usdinr_data(start_date, end_date):
             print(f"Response: {response.text[:500]}")
             return {}
         
-        try:
-            data = response.json()
-            usdinr_data = {}
-            print(f"Data structure: {type(data)}")
-            print(f"Data keys: {data.keys() if isinstance(data, dict) else 'not a dict'}")
-            print(f"Data preview: {str(data)[:500]}")
-            
-            for item in data.get('data', []):
-                date_str = item.get('Trade Date', '')
-                if date_str:
-                    try:
-                        date_obj = datetime.strptime(date_str, '%d-%b-%Y')
-                        date_key = date_obj.strftime('%d%m%Y')
-                        usdinr_data[date_key] = item.get('1 USD ', 0)
-                        print(f"Date: {date_key}, USDINR: {item.get('1 USD ', 0)}")
-                    except Exception as e:
-                        print(f"Date parsing error: {e}")
-                        continue
-            return usdinr_data
-        except json.JSONDecodeError as e:
-            print(f"JSON parse error: {e}")
-            print(f"Response preview: {response.text[:200]}")
-            return {}
+        # Parse CSV response
+        usdinr_data = {}
+        csv_reader = csv.DictReader(StringIO(response.text))
+        
+        print(f"CSV headers: {csv_reader.fieldnames}")
+        
+        for row in csv_reader:
+            date_str = row.get('Trade Date', '').strip()
+            if date_str:
+                try:
+                    date_obj = datetime.strptime(date_str, '%d-%b-%Y')
+                    date_key = date_obj.strftime('%d%m%Y')
+                    usdinr_value = row.get('1 USD ', '0').strip()
+                    if usdinr_value:
+                        usdinr_data[date_key] = float(usdinr_value)
+                        print(f"Date: {date_key}, USDINR: {usdinr_value}")
+                except Exception as e:
+                    print(f"Date parsing error for {date_str}: {e}")
+                    continue
+        
+        return usdinr_data
     except Exception as e:
         print(f"Error: {e}")
         return {}
