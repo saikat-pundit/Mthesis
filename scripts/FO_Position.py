@@ -98,12 +98,12 @@ def fetch_usdinr_data(start_date, end_date):
             data = response.json()
             usdinr_data = {}
             for item in data.get('data', []):
-                date_str = item.get('TRADE_DATE', '')
+                date_str = item.get('Trade Date', '')  # <--- FIX: Changed from 'TRADE_DATE' to 'Trade Date'
                 if date_str:
                     try:
                         date_obj = datetime.strptime(date_str, '%d-%b-%Y')
                         date_key = date_obj.strftime('%d%m%Y')
-                        usdinr_data[date_key] = item.get('USDINR', 0)
+                        usdinr_data[date_key] = item.get('1 USD ', 0)  # <--- FIX: Changed from 'USDINR' to '1 USD '
                     except:
                         continue
             return usdinr_data
@@ -113,12 +113,12 @@ def fetch_usdinr_data(start_date, end_date):
                 data = json.loads(cleaned_text)
                 usdinr_data = {}
                 for item in data.get('data', []):
-                    date_str = item.get('TRADE_DATE', '')
+                    date_str = item.get('Trade Date', '')  # <--- FIX: Changed from 'TRADE_DATE' to 'Trade Date'
                     if date_str:
                         try:
                             date_obj = datetime.strptime(date_str, '%d-%b-%Y')
                             date_key = date_obj.strftime('%d%m%Y')
-                            usdinr_data[date_key] = item.get('USDINR', 0)
+                            usdinr_data[date_key] = item.get('1 USD ', 0)  # <--- FIX: Changed from 'USDINR' to '1 USD '
                         except:
                             continue
                 return usdinr_data
