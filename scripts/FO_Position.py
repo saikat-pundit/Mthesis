@@ -1,8 +1,10 @@
+# script/FO_Position.py
 import requests
 import csv
 from datetime import datetime, timedelta
 import os
 import sys
+import time
 
 def generate_dates(start_date_str, end_date_str):
     start = datetime.strptime(start_date_str, "%d%m%Y")
@@ -17,7 +19,11 @@ def generate_dates(start_date_str, end_date_str):
 def fetch_and_process(date_str):
     url = f"https://nsearchives.nseindia.com/content/nsccl/fao_participant_vol_{date_str}.csv"
     try:
-        response = requests.get(url)
+        # Add timeout and headers to avoid being blocked
+        headers = {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
+        }
+        response = requests.get(url, headers=headers, timeout=10)
         if response.status_code == 404:
             print(f"{date_str}: no data (holiday/weekend)")
             return None
@@ -48,6 +54,12 @@ def fetch_and_process(date_str):
         
         print(f"{date_str}: data fetched ✓")
         return new_headers, rows
+    except requests.exceptions.Timeout:
+        print(f"{date_str}: timeout - skipping")
+        return None
+    except requests.exceptions.ConnectionError:
+        print(f"{date_str}: connection error - skipping")
+        return None
     except Exception as e:
         print(f"{date_str}: error - {e}")
         return None
@@ -67,6 +79,8 @@ def main():
             if headers is None:
                 headers = h
             all_rows.extend(rows)
+        # Small delay between requests to avoid rate limiting
+        time.sleep(0.5)
     
     if not all_rows:
         print("No data collected")
