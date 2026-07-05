@@ -1,4 +1,3 @@
-# script/FO_Position.py
 import requests, csv, os, sys, time, json
 from datetime import datetime, timedelta
 
@@ -28,19 +27,41 @@ def fetch_api(url):
     except: return {}
 
 def parse_index(data):
-    return {datetime.strptime(d['EOD_TIMESTAMP'], '%d-%b-%Y').strftime('%d%m%Y'): d['EOD_CLOSE_INDEX_VAL'] 
-            for d in data.get('data', []) if d.get('EOD_TIMESTAMP')}
+    result = {}
+    for d in data.get('data', []):
+        if d.get('EOD_TIMESTAMP'):
+            try:
+                date_key = datetime.strptime(d['EOD_TIMESTAMP'], '%d-%b-%Y').strftime('%d%m%Y')
+                result[date_key] = d['EOD_CLOSE_INDEX_VAL']
+            except:
+                continue
+    return result
 
 def parse_usdinr(text):
     if text.startswith('\ufeff'): text = text[1:]
-    return {datetime.strptime(v[0], '%d-%b-%Y').strftime('%d%m%Y'): float(v[1]) 
-            for v in [p.strip().strip('"') for p in l.split(',')] 
-            for l in text.strip().split('\n')[1:] if l.strip() 
-            if len(v := [p.strip().strip('"') for p in l.split(',')]) >= 2}
+    result = {}
+    for line in text.strip().split('\n')[1:]:
+        if not line.strip(): continue
+        parts = [p.strip().strip('"') for p in line.split(',')]
+        if len(parts) < 2: continue
+        try:
+            date_key = datetime.strptime(parts[0], '%d-%b-%Y').strftime('%d%m%Y')
+            result[date_key] = float(parts[1])
+        except:
+            continue
+    return result
 
 def parse_cash(data):
-    return {datetime.strptime(d['date'], '%d-%b-%Y').strftime('%d%m%Y'): {d['category']: {'buy': d['buyValue'], 'sell': d['sellValue']}}
-            for d in data if d.get('date') and d.get('category')}
+    result = {}
+    for d in data:
+        if d.get('date') and d.get('category'):
+            try:
+                date_key = datetime.strptime(d['date'], '%d-%b-%Y').strftime('%d%m%Y')
+                if date_key not in result: result[date_key] = {}
+                result[date_key][d['category']] = {'buy': d['buyValue'], 'sell': d['sellValue']}
+            except:
+                continue
+    return result
 
 def get_last_date():
     if not os.path.exists('data/FO_Position.csv'): return None
