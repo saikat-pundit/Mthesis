@@ -3,7 +3,7 @@ import pandas as pd
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
 
-def prepare_prompt_and_context(ai_name="deepseek"):
+def prepare_prompt_and_context(ai_name="general"):
     """
     Reads the latest yield_history.csv, calculates all CAGR/MoM/YoY trajectories,
     constructs the highly constrained macro prompt, and returns the context.
@@ -21,7 +21,7 @@ def prepare_prompt_and_context(ai_name="deepseek"):
     latest_date = df['date'].iloc[-1]
     date_str = latest_date.strftime('%Y-%m-%d')
 
-    # Smart Historical Calculator (With CAGR & Momentum tracking)
+    # Smart Historical Calculator
     def get_historical_metric(col, is_rate=False):
         if col not in df.columns:
             return f"{col}: N/A"
@@ -135,15 +135,29 @@ def prepare_prompt_and_context(ai_name="deepseek"):
     9. THE HUMAN ANGLE (Wages, Real Earnings, & Consumer Expectations)
     """
     
-    # Define report directory and filename
+    # Define report directory and filename based on the AI model
     report_dir = "reports"
     os.makedirs(report_dir, exist_ok=True)
+    
+    # E.g., reports/qwen_report_2026-07-01.txt
     report_file = f"{report_dir}/{ai_name.lower()}_report_{date_str}.txt"
     
     return prompt, date_str, report_file
 
-if __name__ == "__main__":
-    # Quick test to make sure it runs independently
-    p, d, f = prepare_prompt_and_context()
-    print(f"Data Processor initialized for date: {d}")
-    print(f"Output will be saved to: {f}")
+
+def format_and_save_report(ai_display_name, analysis_content, date_str, report_file):
+    """
+    Takes the raw AI analysis text, wraps it in the standardized ASCII headers/footers
+    mentioning the specific AI model, and saves it to the designated text file.
+    """
+    report = f"============================================================\n"
+    report += f"📅 YIELD CURVE DAILY REPORT ({ai_display_name.upper()}) - {date_str}\n"
+    report += f"============================================================\n\n"
+    report += f"📋 AI ANALYSIS:\n{analysis_content}\n"
+    report += f"============================================================\n"
+    report += f"✅ {datetime.now().strftime('%Y-%m-%d %H:%M:%S')} | {ai_display_name}\n"
+    
+    with open(report_file, 'w') as f:
+        f.write(report)
+        
+    print(f"📄 {ai_display_name} report saved successfully to: {report_file}")
