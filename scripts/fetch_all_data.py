@@ -117,19 +117,35 @@ def fetch_all_data():
     print(f"📅 Fetching bulk data from {start_date} to {end_date}...")
     
     # Fetch all series in bulk
+    # Fetch all series in bulk
     all_series_data = {}
+    quarterly_metrics = ["GDP", "GFDEBTN", "DPCCRV1Q225SBEA", "DRCCLACBS", "DRCLACBS", "DRBLACBS"]
+    
     for tenure, series_id in SERIES_MAP.items():
         print(f"  Fetching {tenure} ({series_id})...")
         fetched_data = fetch_bulk_series(series_id, start_date, end_date)
         
-        # ✅ FIX: Shift inflation expectations back to the last day of the previous month
         if tenure.startswith("EXPINF"):
+            # Shift inflation expectations back to the last day of the previous month
             shifted_data = {}
             for obs_date, val in fetched_data.items():
-                # Subtracting 1 day from the 1st of the month perfectly yields the previous month's end date
                 prev_month_last_day = (datetime.strptime(obs_date, "%Y-%m-%d") - timedelta(days=1)).strftime("%Y-%m-%d")
                 shifted_data[prev_month_last_day] = val
             all_series_data[tenure] = shifted_data
+            
+        elif tenure in quarterly_metrics:
+            # ✅ FIX: Shift FRED quarterly dates (01-01, 04-01, etc.) to exact end-of-quarter dates
+            shifted_data = {}
+            for obs_date, val in fetched_data.items():
+                dt = datetime.strptime(obs_date, "%Y-%m-%d")
+                if dt.month == 1: q_end = f"{dt.year}-03-31"
+                elif dt.month == 4: q_end = f"{dt.year}-06-30"
+                elif dt.month == 7: q_end = f"{dt.year}-09-30"
+                elif dt.month == 10: q_end = f"{dt.year}-12-31"
+                else: q_end = obs_date # Fallback
+                shifted_data[q_end] = val
+            all_series_data[tenure] = shifted_data
+            
         else:
             all_series_data[tenure] = fetched_data
     
