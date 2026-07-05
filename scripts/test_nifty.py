@@ -1,35 +1,53 @@
+# script/test_nifty.py
 import requests
 import json
 from datetime import datetime
 
 def fetch_index_data(index_type, start_date, end_date):
+    # First, get cookies from NSE homepage
+    session = requests.Session()
+    
+    # Initial request to get cookies
+    try:
+        session.get('https://www.nseindia.com', headers={
+            'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64; rv:136.0) Gecko/20100101 Firefox/136.0'
+        }, timeout=10)
+    except:
+        pass
+    
     url = f"https://www.nseindia.com/api/historicalOR/indicesHistory?indexType={index_type}&from={start_date}&to={end_date}&csv=true"
     headers = {
-        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-        'Accept-Encoding': 'gzip, deflate, br, zstd',
+        'Accept': 'application/json, text/plain, */*',
+        'Accept-Encoding': 'gzip, deflate, br',
         'Accept-Language': 'en-US,en;q=0.5',
         'Connection': 'keep-alive',
         'DNT': '1',
         'Host': 'www.nseindia.com',
-        'Priority': 'u=0, i',
-        'Sec-Fetch-Dest': 'document',
-        'Sec-Fetch-Mode': 'navigate',
-        'Sec-Fetch-Site': 'none',
-        'Sec-Fetch-User': '?1',
-        'TE': 'trailers',
-        'Upgrade-Insecure-Requests': '1',
+        'Referer': 'https://www.nseindia.com/get-quotes/equity?symbol=RELIANCE',
+        'Sec-Fetch-Dest': 'empty',
+        'Sec-Fetch-Mode': 'cors',
+        'Sec-Fetch-Site': 'same-origin',
         'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64; rv:136.0) Gecko/20100101 Firefox/136.0'
     }
     try:
         print(f"Fetching {index_type} from {start_date} to {end_date}...")
-        response = requests.get(url, headers=headers, timeout=15)
+        response = session.get(url, headers=headers, timeout=15)
         print(f"Status code: {response.status_code}")
+        print(f"Response preview: {response.text[:200]}")
+        
         if response.status_code != 200:
-            print(f"Response: {response.text[:200]}")
+            print(f"Response: {response.text[:500]}")
             return None
-        data = response.json()
-        print(f"Data received: {len(data.get('data', []))} records")
-        return data
+        
+        # Try to parse JSON
+        try:
+            data = response.json()
+            print(f"Data received: {len(data.get('data', []))} records")
+            return data
+        except json.JSONDecodeError:
+            print("Response is not JSON - likely HTML error page")
+            print(f"Full response: {response.text[:1000]}")
+            return None
     except Exception as e:
         print(f"Error: {e}")
         return None
@@ -43,12 +61,16 @@ def main():
     if nifty_data and nifty_data.get('data'):
         for item in nifty_data['data']:
             print(f"Date: {item.get('EOD_TIMESTAMP')}, Close: {item.get('EOD_CLOSE_INDEX_VAL')}")
+    else:
+        print("No NIFTY data received")
     
     print("\n=== Testing BANK NIFTY ===")
     banknifty_data = fetch_index_data('NIFTY%20BANK', start_date, end_date)
     if banknifty_data and banknifty_data.get('data'):
         for item in banknifty_data['data']:
             print(f"Date: {item.get('EOD_TIMESTAMP')}, Close: {item.get('EOD_CLOSE_INDEX_VAL')}")
+    else:
+        print("No BANK NIFTY data received")
 
 if __name__ == "__main__":
     main()
