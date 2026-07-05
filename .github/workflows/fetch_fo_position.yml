@@ -2,7 +2,7 @@ name: Fetch FO Position Data
 
 on:
   schedule:
-    - cron: '0 6 * * *'
+    - cron: '30 17 * * *'  # 5:30 PM UTC = 11:00 PM IST
   workflow_dispatch:
 
 jobs:
