@@ -18,37 +18,56 @@ def generate_dates(start_date_str, end_date_str):
 
 def fetch_index_data(index_type, start_date, end_date):
     url = f"https://www.nseindia.com/api/historicalOR/indicesHistory?indexType={index_type}&from={start_date}&to={end_date}&csv=true"
+    
     headers = {
-        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-        'Accept-Encoding': 'gzip, deflate, br, zstd',
+        'Accept': 'application/json, text/plain, */*',
+        'Accept-Encoding': 'identity',
         'Accept-Language': 'en-US,en;q=0.5',
         'Connection': 'keep-alive',
         'DNT': '1',
         'Host': 'www.nseindia.com',
-        'Priority': 'u=0, i',
-        'Sec-Fetch-Dest': 'document',
-        'Sec-Fetch-Mode': 'navigate',
-        'Sec-Fetch-Site': 'none',
-        'Sec-Fetch-User': '?1',
-        'TE': 'trailers',
-        'Upgrade-Insecure-Requests': '1',
+        'Referer': 'https://www.nseindia.com/get-quotes/equity?symbol=RELIANCE',
+        'Sec-Fetch-Dest': 'empty',
+        'Sec-Fetch-Mode': 'cors',
+        'Sec-Fetch-Site': 'same-origin',
         'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64; rv:136.0) Gecko/20100101 Firefox/136.0'
     }
+    
     try:
         response = requests.get(url, headers=headers, timeout=15)
-        response.raise_for_status()
-        data = response.json()
-        index_data = {}
-        for item in data.get('data', []):
-            date_str = item.get('EOD_TIMESTAMP', '')
-            if date_str:
-                try:
-                    date_obj = datetime.strptime(date_str, '%d-%b-%Y')
-                    date_key = date_obj.strftime('%d%m%Y')
-                    index_data[date_key] = item.get('EOD_CLOSE_INDEX_VAL', 0)
-                except:
-                    continue
-        return index_data
+        if response.status_code != 200:
+            return {}
+        
+        try:
+            data = response.json()
+            index_data = {}
+            for item in data.get('data', []):
+                date_str = item.get('EOD_TIMESTAMP', '')
+                if date_str:
+                    try:
+                        date_obj = datetime.strptime(date_str, '%d-%b-%Y')
+                        date_key = date_obj.strftime('%d%m%Y')
+                        index_data[date_key] = item.get('EOD_CLOSE_INDEX_VAL', 0)
+                    except:
+                        continue
+            return index_data
+        except json.JSONDecodeError:
+            cleaned_text = response.text.replace('\x00', '')
+            try:
+                data = json.loads(cleaned_text)
+                index_data = {}
+                for item in data.get('data', []):
+                    date_str = item.get('EOD_TIMESTAMP', '')
+                    if date_str:
+                        try:
+                            date_obj = datetime.strptime(date_str, '%d-%b-%Y')
+                            date_key = date_obj.strftime('%d%m%Y')
+                            index_data[date_key] = item.get('EOD_CLOSE_INDEX_VAL', 0)
+                        except:
+                            continue
+                return index_data
+            except:
+                return {}
     except Exception as e:
         print(f"Error fetching {index_type}: {e}")
         return {}
