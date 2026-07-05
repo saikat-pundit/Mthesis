@@ -1,0 +1,35 @@
+name: Fetch FO Position Data
+
+on:
+  schedule:
+    - cron: '0 6 * * *'  # Runs at 6:00 AM UTC daily
+  workflow_dispatch:      # Allows manual trigger
+
+jobs:
+  fetch-data:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+      
+      - name: Install dependencies
+        run: |
+          pip install requests
+      
+      - name: Run FO Position script
+        run: |
+          python script/FO_Position.py
+      
+      - name: Commit and push if changes
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add data/FO_Position.csv
+          git diff --quiet && git diff --staged --quiet || git commit -m "Update FO_Position.csv [skip ci]"
+          git push
