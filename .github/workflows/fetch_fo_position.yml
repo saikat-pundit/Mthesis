@@ -1,10 +1,9 @@
-# .github/workflows/fetch_fo_position.yml
 name: Fetch FO Position Data
 
 on:
   schedule:
-    - cron: '0 6 * * *'  # Runs at 6:00 AM UTC daily
-  workflow_dispatch:      # Allows manual trigger
+    - cron: '0 6 * * *'
+  workflow_dispatch:
 
 jobs:
   fetch-data:
@@ -19,13 +18,21 @@ jobs:
         with:
           python-version: '3.9'
       
+      - name: Cache pip dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+      
       - name: Install dependencies
         run: |
-          pip install requests
+          pip install -r requirements.txt
       
       - name: Run FO Position script
         run: |
-          python scripts/FO_Position.py
+          python script/FO_Position.py
       
       - name: Commit and push if changes
         run: |
