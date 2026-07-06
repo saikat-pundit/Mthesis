@@ -1,22 +1,18 @@
-import os, sys, datetime
+import os, sys
 from openai import OpenAI
 
 def transmit_payload_to_ai():
-    reports_dir = "reports"
-    if not os.path.exists(reports_dir):
-        print("❌ No reports directory")
+    # Accept command line arguments
+    if len(sys.argv) >= 3:
+        prompt_file_path = sys.argv[1]
+        date_str = sys.argv[2]
+    else:
+        print("❌ Missing arguments")
         sys.exit(1)
-    
-    analysis_files = [f for f in os.listdir(reports_dir) if f.startswith("FO Analysis_") and f.endswith(".txt")]
-    if not analysis_files:
-        print("❌ No FO Analysis files found")
-        sys.exit(1)
-    
-    latest_file = max(analysis_files)
-    prompt_file_path = os.path.join(reports_dir, latest_file)
-    date_str = latest_file.replace("FO Analysis_", "").replace(".txt", "")
     
     ai_report_path = f"reports/ai_market_analysis_{date_str}.txt"
+    
+    # Check if report already exists
     if os.path.exists(ai_report_path):
         print(f"✅ AI report already exists for {date_str}")
         return
@@ -43,7 +39,6 @@ def transmit_payload_to_ai():
         )
 
         full_response = ""
-        # Hide streaming output - just collect silently
         for chunk in completion:
             if chunk.choices[0].delta.content:
                 full_response += chunk.choices[0].delta.content
