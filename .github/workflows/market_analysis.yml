@@ -31,10 +31,3 @@ jobs:
         env:
           NVIDIA_API_KEY: ${{ secrets.NVIDIA_API_KEY }}
         run: python scripts/data_processing.py
-
-      - name: Upload Analysis Reports as Artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: market-analysis-reports
-          path: reports/
-          retention-days: 7
