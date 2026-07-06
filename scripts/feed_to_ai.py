@@ -1,54 +1,69 @@
-import os, sys
+import os
+import sys
+import datetime
 from openai import OpenAI
 
 def transmit_payload_to_ai():
-    # Accept command line arguments
-    if len(sys.argv) >= 3:
-        prompt_file_path = sys.argv[1]
-        date_str = sys.argv[2]
-    else:
-        print("❌ Missing arguments")
+    prompt_file_path = "reports/processed_data_prompt.txt"
+    date_str = datetime.datetime.now().strftime("%Y-%m-%d")
+    report_output_path = f"reports/ai_market_analysis_{date_str}.txt"
+    
+    if not os.path.exists(prompt_file_path):
+        print(f"Error: Prompt payload missing at '{prompt_file_path}'. Run data_processing.py first.")
         sys.exit(1)
-    
-    ai_report_path = f"reports/ai_market_analysis_{date_str}.txt"
-    
-    # Check if report already exists
-    if os.path.exists(ai_report_path):
-        print(f"✅ AI report already exists for {date_str}")
-        return
-    
+        
+    # Read the compiled AI system prompt/data file
     with open(prompt_file_path, "r", encoding="utf-8") as f:
         prompt = f.read()
-    
+        
+    # Setup API Client
     NVIDIA_API_KEY = os.getenv("NVIDIA_API_KEY")
     if not NVIDIA_API_KEY:
-        print("⚠️ NVIDIA_API_KEY not set")
+        print("⚠️ No NVIDIA_API_KEY found. Ensure it is set in your environment variables or GitHub Secrets.")
         return
 
-    client = OpenAI(base_url="https://integrate.api.nvidia.com/v1", api_key=NVIDIA_API_KEY)
+    client = OpenAI(
+        base_url="https://integrate.api.nvidia.com/v1",
+        api_key=NVIDIA_API_KEY
+    )
 
-    print(f"🔄 Generating AI analysis for {date_str}...")
+    print(f"🔄 Requesting analysis from deepseek-v4-pro (Streaming) for {date_str}...\n")
+    print("======================================================================")
     
     try:
+        # Call the AI Model
         completion = client.chat.completions.create(
             model="deepseek-ai/deepseek-v4-pro",
-            messages=[{"role": "system", "content": "You are an elite institutional market strategist specialized in the Indian National Stock Exchange (NSE) derivatives data analysis."},
-                     {"role": "user", "content": prompt}],
-            temperature=0.8, top_p=0.95, max_tokens=30000,
-            extra_body={"chat_template_kwargs": {"thinking": True}}, stream=True
+            messages=[
+                {"role": "system", "content": "You are an elite institutional market strategist specialized in the Indian National Stock Exchange (NSE) derivatives data analysis."},
+                {"role": "user", "content": prompt}
+            ],
+            temperature=0.8,
+            top_p=0.95,
+            max_tokens=30000,
+            extra_body={"chat_template_kwargs": {"thinking": True}},
+            stream=True
         )
 
         full_response = ""
-        for chunk in completion:
-            if chunk.choices[0].delta.content:
-                full_response += chunk.choices[0].delta.content
         
-        with open(ai_report_path, "w", encoding="utf-8") as f:
+        # Iterate through the stream and print in real-time
+        for chunk in completion:
+            if chunk.choices[0].delta.content is not None:
+                content = chunk.choices[0].delta.content
+                print(content, end="", flush=True)
+                full_response += content
+                
+        print("\n======================================================================")
+        print("✅ Stream complete.")
+
+        # Save the final response to a report file
+        with open(report_output_path, "w", encoding="utf-8") as f:
             f.write(full_response)
-        print(f"✅ AI analysis saved to: {ai_report_path}")
+        print(f"💾 Analysis saved successfully to: {report_output_path}")
         
     except Exception as err:
-        print(f"❌ Error: {err}")
+        print(f"\n❌ An error occurred during API communication: {err}")
 
 if __name__ == "__main__":
     transmit_payload_to_ai()
