@@ -34,14 +34,8 @@ def process_market_data(file_path="data/FO_Position.csv"):
     df = pd.read_csv(file_path)
     df['DATE'] = pd.to_datetime(df['DATE'].astype(str).str.zfill(8), format='%d%m%Y')
     latest_date = df['DATE'].max().strftime('%d%m%Y')          # DDMMYYYY
-    ai_report_path = f"reports/ai_market_analysis_{latest_date}.txt"
 
-    # --- 3. Skip if AI report already exists ---
-    if os.path.exists(ai_report_path):
-        print(f"✅ AI report already exists for date {latest_date}. Skipping.")
-        return
-
-    # --- 4. Update data if we are behind today ---
+    # --- 3. Update data if we are behind today ---
     today = datetime.now().strftime('%d%m%Y')
     if df['DATE'].max().strftime('%d%m%Y') < today:
         print(f"🔄 Updating data up to {today}...")
@@ -49,12 +43,8 @@ def process_market_data(file_path="data/FO_Position.csv"):
         df = pd.read_csv(file_path)
         df['DATE'] = pd.to_datetime(df['DATE'].astype(str).str.zfill(8), format='%d%m%Y')
         latest_date = df['DATE'].max().strftime('%d%m%Y')
-        ai_report_path = f"reports/ai_market_analysis_{latest_date}.txt"
-        if os.path.exists(ai_report_path):
-            print(f"✅ AI report already exists for updated date {latest_date}. Skipping.")
-            return
 
-    # --- 5. Data processing (calculations) ---
+    # --- 4. Data processing (calculations) ---
     df.columns = df.columns.str.strip()
     df = df.sort_values(by=['DATE', 'Client Type']).reset_index(drop=True)
 
@@ -102,7 +92,7 @@ def process_market_data(file_path="data/FO_Position.csv"):
         1, 0
     )
 
-    # --- 6. Performance summary ---
+    # --- 5. Performance summary ---
     summary = {}
     for client in df['Client Type'].unique():
         cd = df[df['Client Type'] == client].dropna(subset=['Nifty_5D_Forward_Return'])
@@ -119,7 +109,7 @@ def process_market_data(file_path="data/FO_Position.csv"):
     latest_date_str = df['DATE'].max().strftime('%Y-%m-%d')
     latest_snapshot = df[df['DATE'] == df['DATE'].max()]
 
-    # --- 7. Build AI prompt ---
+    # --- 6. Build AI prompt ---
     prompt = f"""SYSTEM INSTRUCTION & DATA PAYLOAD: INDIAN STOCK MARKET DERIVATIVES ANALYSIS
 Target Context Date: {latest_date_str}
 Data Horizon Analyzed: >6 Months (From Dec 2025 onwards)
@@ -170,7 +160,7 @@ Based on the data matrix above, provide a comprehensive market commentary detail
 3. Market Outlook: Provide an explicit weekly outlook (via options alignment) and a monthly outlook (via futures build-up).
 """
 
-    # --- 8. Save temp prompt and call feed_to_ai.py ---
+    # --- 7. Save temp prompt and ALWAYS call feed_to_ai.py ---
     temp_prompt_path = f"reports/temp_prompt_{latest_date}.txt"
     with open(temp_prompt_path, "w", encoding="utf-8") as f:
         f.write(prompt)
@@ -182,6 +172,8 @@ Based on the data matrix above, provide a comprehensive market commentary detail
     if os.path.exists(temp_prompt_path):
         os.remove(temp_prompt_path)
 
+    # Always save the final AI report (overwrites if exists)
+    ai_report_path = f"reports/ai_market_analysis_{latest_date}.txt"
     print(f"✅ AI analysis saved to: {ai_report_path}")
 
 if __name__ == "__main__":
