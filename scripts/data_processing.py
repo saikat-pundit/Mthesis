@@ -8,13 +8,20 @@ os.makedirs("reports", exist_ok=True)
 def run_fo_update():
     """Run FO_Position.py to fetch new data and return True if data was appended"""
     if not os.path.exists('scripts/FO_Position.py'):
-        print("⚠️ FO_Position.py not found in scripts/ directory")
+        print("⚠️ FO_Position.py not found")
         return False
     
-    result = subprocess.run(['python', 'scripts/FO_Position.py'], capture_output=True, text=True)
-    print(result.stdout)
-    if result.stderr: print(f"⚠️ {result.stderr}")
-    return "Appended" in result.stdout or "No new data" not in result.stdout
+    # Hide output by capturing and suppressing it
+    result = subprocess.run(['python', 'scripts/FO_Position.py'], 
+                           capture_output=True, text=True)
+    
+    # Only show minimal output
+    if "Appended" in result.stdout:
+        print("✅ New data appended to FO_Position.csv")
+    elif "No new data" in result.stdout:
+        print("ℹ️ No new data available")
+    
+    return "Appended" in result.stdout
 
 def process_market_data(file_path="data/FO_Position.csv"):
     if not os.path.exists(file_path):
