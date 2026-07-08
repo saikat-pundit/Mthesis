@@ -33,8 +33,9 @@ def main():
             temperature=0.8,
             top_p=0.95,
             max_tokens=30000,
-            extra_body={"chat_template_kwargs": {"thinking": True}},
-            stream=True
+            reasoning_effort="high",
+            extra_body={"thinking": {"type": "enabled"}},
+            stream=False
         )
         
         analysis_content = ""
