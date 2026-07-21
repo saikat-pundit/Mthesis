@@ -1,0 +1,156 @@
+============================================================
+📅 YIELD CURVE DAILY REPORT (gpt-oss-120b) - 2026-07-17
+============================================================
+
+📋 AI ANALYSIS:
+**1. MACROECONOMIC, INFLATION EXPECTATIONS & LIQUIDITY TRENDS**  
+- **Growth:** Real GDP +4.53 % YoY (4.56 % 2‑yr CAGR). Federal debt rising 7.88 % YoY – fiscal head‑room is tightening.  
+- **Core price pressure:** CPI +3.90 % YoY (3.29 % 2‑yr CAGR) vs. PPI +12.29 % YoY (6.91 % CAGR). PPI is still pulling headline inflation up, but the CPI‑PPI gap is narrowing.  
+- **Forward inflation:** 1‑yr expectations fell 63 bps MoM, 89 bps QoQ and 40 bps YoY → now 2.39 %; 2‑yr expectations at 2.44 % after a 31 bps MoM drop. 5‑yr and 10‑yr expectations have turned positive (+2 % and +3 % annualised), indicating a modest “inflation hump” in the medium term.  
+- **Liquidity:** M2 +5.07 % YoY (4.60 % CAGR) – still expanding, but Fed balance‑sheet –3.28 % 2‑yr CAGR shows a pull‑back in excess reserves.  
+- **Currency:** DXY flat YoY (‑0.02 %) but –1.35 % 2‑yr CAGR, implying a modest tilt toward a weaker dollar as real yields fall.  
+
+*Take‑away:* Real growth is solid, inflation expectations are falling faster than actual CPI, and liquidity is modestly positive. The picture points to a “soft‑landing” bias, but the rise in medium‑term expectations and the PPI‑CPI gap keep a downside‑risk ceiling.
+
+---
+
+**2. YIELD OUTLOOK (SHORT / MEDIUM / LONG)**  
+
+| Segment | Current | 2‑yr trend (annualised) | Recent MoM/QoQ | Spread drivers | Outlook |
+|---------|---------|------------------------|----------------|----------------|---------|
+| **3M** | 3.85 % | –79 bps | +2 bps MoM, +15 bps QoQ | Downward 2‑yr trend, but short‑term rise reflects liquidity easing. | **Short:** flat‑to‑slightly higher (3.90‑4.00 %). |
+| **2Y** | 4.18 % | –12 bps | –2 bps MoM, +47 bps QoQ | Yield curve flattening; 2‑yr is the “policy‑sensitive” pillar. | **Medium (1‑2 yr):** hold near 4.15‑4.25 %. |
+| **10Y** | 4.55 % | +19 bps | +6 bps MoM, +29 bps QoQ | Rising medium‑term inflation expectations (+2 % 10‑yr) push yields up. | **Medium‑Long (5‑10 yr):** gradual climb to 4.70‑4.80 % by H2‑2025. |
+| **30Y** | 5.06 % | +34 bps | +13 bps MoM, +18 bps QoQ | Long‑term “risk premium” rising as 30Y‑2Y spread (0.88 %) narrows, but still positive. | **Long:** 5.10‑5.20 % in 2025‑26. |
+
+**Key spreads**  
+- 10Y‑3M ≈ 70 bps (still positive, less than 100 bps historic inversion threshold).  
+- 10Y‑2Y ≈ 37 bps (tight, signalling modest risk appetite).  
+- 30Y‑2Y ≈ 88 bps (global‑liquidity proxy; narrowing suggests tightening of long‑dated funding).  
+
+*Bottom line:* The curve is flattening but not inverted; short‑term yields are anchored by policy, while medium‑long yields respond to rising forward inflation expectations and a modest long‑run liquidity premium.
+
+---
+
+**3. EQUITIES**  
+
+**Current scenario**  
+- Earnings growth supported by **wage CAGR +3.51 %** > CPI, but forward inflation (2‑yr 2.44 %) leaves real profit margins under pressure.  
+- 30Y‑2Y spread tightening reduces the “duration premium” for growth stocks; valuation pressure arises from rising 10Y yields.  
+- DXY flat‑to‑weak, modestly benefitting exporters.
+
+**Forward‑looking forecast**  
+- S&P 500 earnings multiples likely compress 5‑10 % as real yields rise to ~4.5 % (10Y).  
+- Sector tilt: **Consumer discretionary & technology** (price‑elastic, capacity to pass costs) outperform; **Utilities & REITs** (interest‑sensitive) under‑weight.
+
+**Prefer**  
+- High‑margin, pricing‑power names; EPS growth >3 % YoY.  
+- Companies with >30 % of revenue abroad (benefit from weaker DXY).  
+
+**Avoid**  
+- High‑beta, dividend‑heavy utilities & telecoms (sensitivity to 10Y).  
+- Low‑margin retailers facing sticky core CPI vs. wage growth.
+
+---
+
+**4. BONDS**  
+
+**Current scenario** – Flattened curve, modest inflation expectation upside. 5‑yr and 10‑yr yields moving higher, 30‑yr still a premium.  
+
+**Forward‑looking forecast**  
+- **Short end (3M‑2Y):** flat to modest rise; keep cash equivalents in Treasury bills or overnight repos.  
+- **Medium (5Y‑10Y):** position for a 15‑20 bps lift; ladder with 5‑7 yr notes.  
+- **Long (20Y‑30Y):** maintain a small tilt (≤15 % of duration) to capture the 30Y‑5Y spread (≈1 %) if inflation expectations stay below 2.5 % on the long end.
+
+**Prefer**  
+- 5‑yr Treasury & Treasury‑inflation‑protected securities (TIPS) at 2‑yr forward 2.2‑2.4 % real yield.  
+- Investment‑grade corporates with 5‑yr spreads ≤120 bps (still cheap vs. historical 150 bps average).
+
+**Avoid**  
+- Long‑dated high‑yield or emerging‑market debt (30Y‑2Y spread compression reduces risk premium).  
+- Floating‑rate notes that would reset to a higher Fed‑funds path if policy tightens.
+
+---
+
+**5. GOLD & PRECIOUS METALS**  
+
+**Current scenario** – Real yields (10Y‑inflation expectations) are rising, but expectations are still below 2‑yr (2.44 %), keeping gold’s “inflation hedge” appeal. DXY weakness adds a modest upside.  
+
+**Forward‑looking forecast**  
+- Gold price to trade in a $1,900‑$2,100 range through 2025, with upside if CPI‑PPI gap widens or if the dollar weakens further.  
+
+**Prefer**  
+- Physical/ETF exposure 5‑10 % of portfolio (as hedge against unexpected CPI spikes).  
+
+**Avoid**  
+- Leveraged gold futures or mining equities with high cost‑structures; they suffer from rising real yields.
+
+---
+
+**6. COMMODITIES**  
+
+**Current scenario** – PPI up 12.29 % YoY, but forward inflation expectations are falling, suggesting a short‑term demand‑side softness.  
+
+**Forward‑looking forecast**  
+- Energy & industrial metals likely to drift lower as forward inflation (5‑yr 2.42 %) stays subdued; however, any resurgence in CPI‑PPI divergence could revive price pressure.  
+
+**Prefer**  
+- Broad commodity ETFs with exposure to base metals, trimmed to 3‑5 % of assets.  
+- Agricultural commodities (low correlation, small exposure to inflation expectations).  
+
+**Avoid**  
+- Oil‑focused plays; price volatility spikes with little macro support.  
+- Highly leveraged commodity producers (exposed to higher financing costs as 10Y rises).
+
+---
+
+**7. CASH & FX**  
+
+**Current scenario** – DXY flat YoY, –1.35 % 2‑yr CAGR; USD yields (Fed funds 3.63 %) below inflation expectations on the 2‑yr horizon, eroding carry.  
+
+**Forward‑looking forecast**  
+- Expect modest USD depreciation (‑0.5 % to ‑1 % per annum) as foreign yields hold steady and Fed policy remains steady.  
+
+**Prefer**  
+- Short‑duration USD cash (3‑month T‑Bills) for liquidity.  
+- EUR/JPY positions (higher real yields) for modest yield capture.  
+
+**Avoid**  
+- Long‑dated USD‑linked deposits (negative real return).  
+- Emerging‑market FX carries that are sensitive to a tightening 10Y curve.
+
+---
+
+**8. PORTFOLIO MIX, SCENARIOS & ACTIONABLE STRATEGY**  
+
+| Investor type | Core allocation | Tactical overlay | Rationale |
+|----------------|----------------|------------------|-----------|
+| **Conservative** | 40 % IG bonds (5‑7 yr), 10 % TIPS, 30 % dividend‑yield equities, 10 % cash, 5 % gold, 5 % commodities | Shift 5‑yr bond weight +5 % if 10Y >4.65 % | Protects against rising real yields; dividend stocks hedge income shortfall. |
+| **Balanced** | 30 % equities (growth + value), 30 % IG bonds, 10 % TIPS, 15 % cash, 10 % gold, 5 % commodities | Add 5‑yr Treasury ladder +5 % when 10Y‑2Y spread <40 bps | Balances income, growth, and inflation hedge. |
+| **Aggressive** | 55 % equities (tech/consumer discretionary), 20 % high‑yield credit, 10 % commodities, 5 % gold, 5 % cash, 5 % crypto (optional) | Reduce Treasury exposure, increase 2‑yr notes if 2‑yr expectations stay <2.5 % | Leverages pricing power and price‑inflation dynamics. |
+
+**Scenario probabilities (next 12 months)**  
+- **Base (55 %):** GDP stays ~4.5 %, CPI remains around 3.9 %, forward inflation expectations settle near 2.3‑2.5 %; yields follow the modest upward path outlined above.  
+- **Bull (25 %):** Unexpected supply‑side shock (e.g., energy shortage) pushes CPI >4.5 % and 10Y to 4.80‑4.90 %; equities with pricing power outperform, long‑duration bonds lag.  
+- **Bear (20 %):** Geopolitical risk triggers a flight to quality, DXY rallies, 10Y falls below 4.30 %, growth stalls at 3 % YoY; defensive equities and cash outperform.
+
+**Actionable moves**  
+1. **Rebalance** to 5‑yr Treasury ladder (20 % of fixed‑income) now; price is still below 5‑yr forward 2.4 % real yield.  
+2. **Add** 2‑yr TIPS (10 % of portfolio) to lock in real yield ahead of any CPI surprise.  
+3. **Scale up** high‑margin consumer‑discretionary equity exposure (5‑10 % of equity tilt).  
+4. **Trim** long‑dated high‑yield bonds (30Y) and emerging‑market debt.  
+5. **Maintain** a modest gold allocation (5 %) as insurance against a CPI‑PPI widening.
+
+---
+
+**9. THE HUMAN ANGLE (Wages, Real Earnings, & Consumer Expectations)**  
+
+- **Wage vs. CPI:** Avg. hourly earnings +3.16 % YoY vs. CPI +3.90 % → **real wage gap –0.74 %** (purchasing power shrinking).  
+- **Wage vs. Expectations:** 1‑yr inflation expectations 2.39 % < wage growth, meaning workers see their **real pay rising** relative to the market’s price outlook. However, actual CPI remains higher, causing short‑run “pain”.  
+- **Unemployment:** 4.30 % (up 20 bps YoY) signals a slightly tighter labor market, supporting wage growth but also dampening consumer confidence.  
+- **Housing supply:** Months of inventory +14.44 % YoY, now 10.3 months – still a **seller’s market**, but rising mortgage rates (10Y ≈4.55 %) are beginning to compress affordability.  
+- **Consumer outlook:** With wages outpacing the market’s 2‑yr expectation (2.44 %) but lagging CPI, households are likely to **tighten discretionary spending**, pushing demand back toward essentials and price‑sensitive categories.  
+
+*Bottom line for the consumer:* Real earnings are marginally eroding, expectations of inflation are falling faster than prices, and higher mortgage rates are curbing the housing surge. This environment favors **value‑oriented consumption** and **price‑sensitive sectors**, while **high‑margin exporters** and **digital‑services** firms can still extract upside.  
+============================================================
+✅ 2026-07-21 00:58:39 | openai/gpt-oss-120b
