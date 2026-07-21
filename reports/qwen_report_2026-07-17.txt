@@ -1,0 +1,134 @@
+============================================================
+📅 YIELD CURVE DAILY REPORT (Qwen 3.5) - 2026-07-17
+============================================================
+
+📋 AI ANALYSIS:
+# MACRO STRATEGY MEMORANDUM
+**TO:** Institutional Investment Committee
+**FROM:** Global Macro Strategy Desk
+**SUBJECT:** 360° Market Outlook: The Great Repricing of Duration and Expectations
+
+## 1. MACROECONOMIC, INFLATION EXPECTATIONS & LIQUIDITY TRENDS
+
+The US economy is navigating a distinct regime shift characterized by resilient nominal growth but a fracturing consensus on future price stability. GDP is expanding at a robust **4.56% 2-Year CAGR**, yet the momentum has stalled with **0.00% MoM** growth in the latest print, signaling a potential growth plateau. Simultaneously, Federal Debt is compounding at **5.90% annually**, outpacing nominal GDP growth in recent quarters, which introduces a structural supply overhang for long-duration assets.
+
+The critical narrative lies in the divergence between actual inflation and forward expectations. While actual CPI has surged **3.90% YoY** and PPI has exploded **12.29% YoY** (driven by a massive **5.99% QoQ** spike), the market is aggressively pricing in a disinflationary future. The **1-Year Expected Inflation (EXPINF1YR)** has collapsed **-63 bps MoM** to 2.39%, and the **2-Year expectation** dropped **-31 bps MoM**. This creates a dangerous wedge: actual prices are hot, but the bond market is betting on a rapid cool-down.
+
+Liquidity conditions are bifurcated. M2 Money Supply is accelerating with a **5.07% YoY** increase, providing ample fuel for asset prices. However, the Fed Balance Sheet (WALCL) remains in a secular contraction phase, down **-3.28% on a 2-Year CAGR**, even as it ticked up **+0.55% QoQ**. This suggests the Fed is pausing QT temporarily but has not resumed organic expansion. The tension between expanding M2 and a shrinking balance sheet indicates that velocity is likely picking up, reinforcing the need to watch the spread between actual CPI and anchored long-term expectations (5Y/10Y), which have barely moved (**+3 bps** and **+7 bps** over 2 years, respectively). If actual inflation fails to converge with these low expectations, a violent repricing of the long end is imminent.
+
+## 2. YIELD OUTLOOK (Short/Medium/Long)
+
+The yield curve is undergoing a dramatic normalization, driven by a collapse in short-term rates and a steepening of the long end.
+
+*   **Short-End (3M - 2Y):** The easing cycle is in full force. The **3M Yield** has plummeted **-158 bps** over the last two years (-79 bps annualized) and sits at 3.85%. More significantly, the **Fed Funds Rate** has dropped **-170 bps** on a 2-Year CAGR. However, recent momentum shows a pause, with the 2Y Yield flat **MoM (-2 bps)** despite a **+47 bps QoQ** rise, suggesting the market is digesting the pace of cuts. The **10Y-2Y spread** has moved from deep inversion toward neutrality, reflecting improved risk sentiment but also term premium demands.
+*   **Medium-End (5Y - 10Y):** This sector is the battlefield for inflation expectations. The **10Y Yield** has risen **+39 bps** over two years (+19 bps annualized) and jumped **+29 bps QoQ**. This rise occurs despite falling 1Y/2Y inflation expectations, indicating that investors are demanding a higher term premium to hold duration amidst fiscal concerns (Debt CAGR +5.90%).
+*   **Long-End (30Y):** The long bond is flashing a warning signal. The **30Y Yield** has surged **+69 bps** over two years (+34 bps annualized) and spiked **+18 bps QoQ**. The **30Y-5Y spread** is widening significantly, as long-term yields rise while 5Y expectations remain anchored near 2.42%.
+
+**Curve Spreads Analysis:**
+*   **30Y - 2Y Spread (Global Liquidity Proxy):** Widening aggressively. As the 2Y falls and 30Y rises, this spread is normalizing from inversion to steep positive territory, historically a signal that liquidity is shifting from money markets to long-duration risk assets, though often preceded by volatility.
+*   **10Y - 3M Spread (Recession Warning):** This spread has flipped positive. The 3M yield (-158 bps 2Y change) has fallen far faster than the 10Y (+39 bps 2Y change). The removal of this inversion removes the immediate recession signal but opens the door to "no landing" or reflationary risks.
+*   **10Y - 2Y Spread (Policy & Risk):** Moving toward flat/positive. The divergence between the policy-sensitive 2Y and the growth-sensitive 10Y suggests the market believes the Fed has successfully engineered a soft landing, allowing growth to persist without overheating, despite the hot PPI prints.
+
+## 3. EQUITIES
+
+**Current Scenario & Forecast:**
+Equities are operating in a "Goldilocks" liquidity trap. Nominal GDP growth (**4.56% 2Y CAGR**) supports top-line revenue, while the sharp decline in the 3M Yield (**-158 bps 2Y**) lowers the discount rate for near-term cash flows. However, the rise in the 10Y Yield (**+39 bps 2Y**) pressures long-duration growth valuations. The key driver remains the gap between actual inflation (CPI +3.90% YoY) and expected inflation (1Y Exp -63 bps MoM). If actual inflation remains sticky while expectations stay low, margins will compress as input costs (PPI +12.29% YoY) cannot be fully passed on. We forecast a rotation from long-duration tech toward value and cyclicals that benefit from the steepening curve and sustained nominal growth.
+
+**PREFER:**
+*   **Financials & Regional Banks:** Benefit directly from the steepening **30Y-2Y spread** and higher net interest margins as short-term funding costs drop faster than long-term asset yields.
+*   **Energy & Materials:** With PPI surging **+12.29% YoY** and M2 growing **+5.07% YoY**, commodity-linked equities offer a hedge against the potential re-acceleration of actual inflation that the bond market is currently ignoring.
+*   **Quality Value:** Companies with strong free cash flow and low duration sensitivity to the rising 10Y yield.
+
+**AVOID:**
+*   **Unprofitable Long-Duration Growth:** These assets are most sensitive to the **10Y Yield**, which is trending up (+29 bps QoQ) despite the Fed cutting. The term premium expansion is a headwind.
+*   **Consumer Discretionary (Low-End):** With real wage growth under pressure (see Section 9) and housing supply surging (**+14.44% YoY**), lower-income consumption is likely to contract.
+
+## 4. BONDS
+
+**Current Scenario & Forecast:**
+The bond market is presenting a classic "bull steepener" turning into a "bear steepener" risk. Short-end yields (3M, 2Y) have collapsed on the back of Fed easing (Fed Funds **-170 bps 2Y CAGR**), making the front end attractive for carry. However, the long end (10Y, 30Y) is selling off due to fiscal supply (Debt **+5.90% CAGR**) and term premium concerns. The critical disconnect is the **10Y Expected Inflation** (+7 bps 2Y) remaining anchored while actual CPI runs hot. If this anchor breaks, long-duration bonds face significant mark-to-market losses. We anticipate volatility in the 10Y-30Y sector as the market reconciles hot PPI data with dovish expectations.
+
+**PREFER:**
+*   **Short-Duration Treasuries (6M - 2Y):** Capture the yield before the Fed cuts further, with minimal duration risk. The **2Y Yield** volatility has decreased, offering a stable carry trade.
+*   **TIPS (Treasury Inflation-Protected Securities):** With actual CPI at **+3.90% YoY** and 5Y/10Y expectations artificially low (~2.4%), TIPS offer cheap protection against a resurgence in realized inflation.
+*   **Investment Grade Corporates:** Benefit from the flattening of credit spreads as the recession probability (inverted 10Y-3M) diminishes.
+
+**AVOID:**
+*   **Long-Duration Nominal Treasuries (20Y-30Y):** The **30Y Yield** has risen **+69 bps** over two years and faces headwinds from massive debt issuance. The risk/reward is skewed to the downside if inflation expectations unanchor.
+*   **Low-Quality High Yield:** As the labor market cools (Unemployment **+20 bps YoY**) and real wages stagnate, default risks in the lowest tranche will rise.
+
+## 5. GOLD & PRECIOUS METALS
+
+**Current Scenario & Forecast:**
+Gold is positioned for a structural breakout. The primary drivers are the collapse in real short-term rates (3M Yield **-158 bps 2Y**) and the debasement trade driven by Federal Debt expanding at **5.90% CAGR**. While the strong Dollar (DXY) has been a headwind historically, the DXY is down **-1.35% on a 2-Year CAGR**, removing a key阻力. Crucially, the divergence between hot actual inflation (CPI/PPI) and suppressed long-term inflation expectations creates an asymmetric setup: if expectations rise to meet reality, gold rallies; if the Fed cuts further to combat slowing growth (0% MoM GDP), real yields drop, and gold rallies.
+
+**PREFER:**
+*   **Physical Gold & Senior Miners:** Direct exposure to negative real rates and fiscal dominance. The **30Y-2Y steepening** is historically bullish for gold as it signals future monetary expansion.
+*   **Silver:** Offers leveraged exposure to both monetary demand and industrial demand (supported by M2 growth).
+
+**AVOID:**
+*   **Long-Duration Fixed Income proxies:** Any asset that acts as a pure bond substitute without inflation protection is vulnerable to the term premium shock.
+
+## 6. COMMODITIES
+
+**Current Scenario & Forecast:**
+Commodities are flashing a "reflation" signal that the bond market is missing. PPI has surged **+12.29% YoY** with a massive **+5.99% QoQ** jump, indicating intense upstream price pressure. Meanwhile, M2 Money Supply is expanding **+5.07% YoY**, providing the liquidity necessary to sustain commodity rallies. The weak Dollar trend (**-1.35% 2Y CAGR**) further supports non-USD denominated assets. The disconnect between low 5Y inflation expectations (+3 bps 2Y) and surging producer prices suggests a mean reversion is due, favoring hard assets.
+
+**PREFER:**
+*   **Energy (Crude/Natural Gas):** Direct play on PPI inflation and geopolitical supply constraints.
+*   **Industrial Metals:** Supported by the resilient GDP (**4.56% 2Y CAGR**) and global liquidity expansion.
+*   **Agriculture:** Housing supply is up (**+14.44% YoY**), but input costs for construction and food are rising via PPI; agriculture offers a hedge against the cost-push inflation visible in the PPI data.
+
+**AVOID:**
+*   **Pure Deflationary Plays:** Assets that bet on a collapse in demand are misaligned with the expanding M2 and sticky PPI data.
+
+## 7. CASH & FX
+
+**Current Scenario & Forecast:**
+The era of "cash is king" is ending as the Fed cuts rates. The **3M Yield** has dropped **-158 bps** over two years, eroding the attractiveness of money market funds. The US Dollar (DXY) is in a secular downtrend (**-1.35% 2Y CAGR**), driven by the narrowing rate differential as the Fed eases faster than other central banks and the twin deficit problem (Fiscal + Trade). However, short-term USD strength may persist if the "soft landing" narrative holds and US growth (4.56% CAGR) outperforms peers.
+
+**PREFER:**
+*   **Short-Duration Cash (Overnight/1M):** Lock in remaining yield before the 3M rate drifts lower.
+*   **EM FX (Selective):** As the DXY weakens and global liquidity (M2) expands, emerging markets with strong commodity exports will benefit.
+*   **JPY (Long-term):** As the yield curve steepens and the Fed cuts, the carry trade unwind supports a gradual JPY appreciation.
+
+**AVOID:**
+*   **Long-Duration USD Cash:** Reinvestment risk is high as the **3M Yield** trajectory is clearly downward (-79 bps annualized).
+*   **High-Beta FX against USD:** While DXY is weak, global growth slowing (0% MoM GDP) could trigger risk-off flows that temporarily spike the dollar.
+
+## 8. PORTFOLIO MIX, SCENARIOS & ACTIONABLE STRATEGY
+
+**Scenario Analysis:**
+
+*   **Base Case (55% Probability): "Controlled Steepener."** Growth slows slightly but avoids recession (GDP ~2-3%), inflation converges slowly to target, and the curve steepens normally.
+    *   *Reasoning:* Consistent with current 2Y CAGR growth and anchored 5Y/10Y inflation expectations.
+*   **Bull Case (25% Probability): "Reflationary Boom."** M2 velocity spikes, PPI feeds into CPI, and long-term expectations unanchor upward. Growth accelerates.
+    *   *Reasoning:* Triggered by the massive PPI jump (+12.29% YoY) and loose fiscal policy (Debt +5.90% CAGR).
+*   **Bear Case (20% Probability): "Stagflationary Stall."** Growth collapses (GDP <1%), but inflation remains sticky due to supply shocks. The curve flattens again as long yields spike on risk premium.
+    *   *Reasoning:* Risk if the 0% MoM GDP print is the start of a sharp downturn while wage-price spirals (Wages +3.16% YoY) keep inflation high.
+
+**Actionable Strategy:**
+
+*   **Risky Investor:**
+    *   **Overweight:** Equities (Energy/Materials), Long Gold, High-Yield Commodities.
+    *   **Underweight:** Long-duration Treasuries, Cash.
+    *   *Rationale:* Bet on the "Bull Case" where M2 growth and PPI surges drive nominal assets higher, ignoring the transitory nature of current low inflation expectations.
+
+*   **Conservative Investor:**
+    *   **Overweight:** Short-duration Treasuries (1-2Y), TIPS, Investment Grade Credit.
+    *   **Underweight:** Long-duration Bonds, Unprofitable Tech.
+    *   *Rationale:* Protect capital from the volatility of the **10Y-3M** normalization and hedge against the risk that actual inflation exceeds the anchored **2.4%** expectations.
+
+*   **Balanced Investor:**
+    *   **Mix:** 40% Short Duration Fixed Income, 30% Quality Equities (Financials/Value), 20% Commodities/Gold, 10% Cash.
+    *   *Rationale:* Capture the yield on the short end while maintaining exposure to real assets that benefit from the **30Y-2Y** steepening and fiscal expansion.
+
+## 9. THE HUMAN ANGLE (Wages, Real Earnings, & Consumer Expectations)
+
+The American consumer is facing a "silent squeeze" that threatens to derail the soft landing. While **Average Hourly Earnings** are growing at a healthy **+3.51% 2-Year CAGR** (+3.16% YoY), they are barely keeping pace with actual **CPI inflation (+3.90% YoY)**. More critically, they are significantly lagging behind **PPI inflation (+12.29% YoY)**, which inevitably filters down to consumer goods.
+
+The psychological landscape is shifting. **1-Year Inflation Expectations** have dropped sharply (-63 bps MoM), suggesting consumers *hope* for relief, but the reality of their purchasing power is shrinking in real terms. With the **Unemployment Rate** ticking up **+20 bps YoY** to 4.30%, job security is becoming a concern.
+
+This dynamic is visibly impacting the housing market. **Housing Supply** has surged **+14.44% YoY** and **+18.39% QoQ**, a massive build-up of inventory. This is a direct function of the "lock-in" effect: homeowners are reluctant to sell and trade their low legacy mortgages for new rates implied by the **10Y Yield (4.55%)** and **30Y Yield (5.06%)**. Simultaneously, buyers are priced out as wage growth fails to outstrip the combined burden of high home prices and elevated mortgage rates. The result is a stagnating market with rising supply and weakening demand, a leading indicator for broader economic cooling. Consumers are bracing for higher prices (evidenced by the PPI surge) but lack the real wage growth to absorb them, setting the stage for a potential pullback in discretionary spending.
+============================================================
+✅ 2026-07-21 00:15:11 | qwen3.5-122b-a10b
