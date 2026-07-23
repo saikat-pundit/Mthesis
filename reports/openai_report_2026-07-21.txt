@@ -1,0 +1,117 @@
+============================================================
+📅 YIELD CURVE DAILY REPORT (gpt-oss-120b) - 2026-07-21
+============================================================
+
+📋 AI ANALYSIS:
+**1. MACROECONOMIC, INFLATION EXPECTATIONS & LIQUIDITY TRENDS**  
+*Growth*: Real GDP is running a 4.56 % 2‑yr CAGR (≈2.2 % YoY) while the federal debt is expanding at 5.9 % CAGR. Both are above historical averages, indicating a still‑expanding economy but with a fiscal drag.  
+
+*Inflation*: CPI YoY is +3.90 % (2‑yr CAGR 3.29 %). Forward inflation expectations have slipped sharply – 1‑yr EXINF down 40 bps YoY to 2.39 %, 2‑yr EXINF down 12 bps YoY to 2.44 %, and 5‑yr EXINF now above 2.4 % (up 5 bps YoY). The gap between actual CPI (3.9 %) and 1‑yr expected inflation (2.4 %) is ~1.5 % – a clear sign that markets see a cooling‑off trajectory.  
+
+*Liquidity*: M2 is growing +4.6 % CAGR (≈5 % YoY), providing ample money‑market funding. The Fed’s balance‑sheet is still contracting (‑3.28 % CAGR) but at a slower pace, leaving a modest net‑withdrawal of reserves.  
+
+*Key spreads* (latest points):  
+- 30Y‑2Y ≈ 0.87 % (5 yr bps positive, still upward‑sloping)  
+- 10Y‑2Y ≈ 0.37 % (moderately steep, signalling room for policy easing)  
+- 10Y‑3M ≈ 0.76 % (no inversion, recession risk low for now)  
+- 30Y‑5Y ≈ 0.9 % (long‑end still richer than intermediate).
+
+**2. YIELD OUTLOOK (SHORT / MEDIUM / LONG)**  
+
+| Horizon | Current level | Forward‑inflation driver | Spread dynamics | Forecast |
+|---------|---------------|--------------------------|-----------------|----------|
+| **Short (3M‑2Y)** | 3M 3.87 % → 2Y 4.26 % (+7 bps MoM, +48 bps QoQ) | 1‑yr EXINF 2.39 % (down 63 bps MoM) | 10Y‑3M still positive (0.76 %); 2Y rising faster than 3M | Yields likely **edge higher** 10‑25 bps over the next 3‑6 m as the market prices the residual Fed‑rate stickiness. |
+| **Medium (2Y‑10Y)** | 2Y 4.26 % (+41 bps YoY) → 10Y 4.63 % (+25 bps YoY) | 2‑yr EXINF 2.44 % (down 31 bps MoM) | 10Y‑2Y spread widening modestly (0.37 %) | With inflation expectations anchored near 2.4‑2.5 % and fiscal stimulus fading, **10Y should rise 15‑30 bps**; 2Y may plateau as the Fed’s rate‑cut cycle slows. |
+| **Long (10Y‑30Y)** | 10Y 4.63 % → 30Y 5.13 % (+19 bps YoY) | 10‑yr EXINF 2.43 % (up 5 bps MoM) | 30Y‑10Y spread stable ~0.5 % | The long‑end is still priced for modest real growth and still‑elevated term premia; **30Y likely holds** near 5.1‑5.2 % barring a shock to fiscal deficits. |
+
+**3. EQUITIES**  
+
+*Current scenario*: Equity valuations are being compressed by higher real yields (10Y≈4.6 % real). Earnings growth (GDP +4.5 % YoY, wage growth +3.2 % YoY) outpaces inflation expectations, supporting profit margins. Liquidity remains decent (M2 +5 % YoY).  
+
+*Forward view*:  
+- **Cycle‑sensitive sectors** (industrials, consumer discretionary) benefit from the still‑expanding real economy but face head‑winds from higher financing costs.  
+- **Tech & growth** are penalised by a rising real yield curve; however, forward‑inflation expectations at ~2.4 % keep discount rates moderate.  
+
+*Prefer*:  
+- **U.S. large‑cap quality with earnings growth >3 % YoY** (e.g., S&P 500 information‑tech, health‑care). Yield‑sensitive dividend stocks with payout ratios <60 % (utilities, consumer staples) provide a modest “yield + equity” hedge.  
+
+*Avoid*:  
+- **High‑beta small‑cap/value** that are overly sensitive to rising rates and fiscal drag.  
+- **Growth stocks priced on zero‑inflation assumptions** (e.g., high‑multiple SaaS) – their forward‑discount rates are now ~150 bps higher than a year ago.
+
+**4. BONDS**  
+
+*Current scenario*: The curve is upward‑sloping but flattening (10Y‑3M still +76 bps). Inflation expectations have dropped, so nominal yields are decoupled from headline CPI.  
+
+*Prefer*:  
+- **2Y‑5Y Treasury strip** – yields are still falling QoQ (2Y‑YoY +41 bps but still below 5‑yr trend) and provide the best roll‑down.  
+- **TIPS (5‑10Y)** – real yields ~0.6 % (based on 10Y 4.63 % vs EXINF 2.43 %). With CPI‑TIPS spread narrowing, TIPS offer inflation‑adjusted returns without large nominal volatility.  
+
+*Avoid*:  
+- **Long‑dated Treasuries (>30Y)** – higher term premia (30Y‑5Y ≈ 0.9 %) and exposure to fiscal‑deficit risk.  
+- **High‑yield corporates** – widening spread risk as the Fed’s balance‑sheet contraction could tighten credit markets.
+
+**5. GOLD & PRECIOUS METALS**  
+
+*Current scenario*: Real yields are rising modestly, eroding the “zero‑inflation” premium for gold. Yet DXY is flat (‑0.02 % YoY) and inflation expectations are falling, weakening the classic safe‑haven driver.  
+
+*Prefer*:  
+- **Physical gold / bullion ETFs (10‑yr horizon)** as a hedge against any surprise inflation spike; price likely to stay flat‑to‑slightly up (5‑10 % upside) if CPI resurges above 2 % expectations.  
+
+*Avoid*:  
+- **Gold mining equities** – heavy leverage and exposure to rising real rates make them volatile; focus on cash‑rich miners only if they show strong cash‑flow yields >5 %.  
+
+**6. COMMODITIES**  
+
+*Current scenario*: PPI YoY is +12.3 % (2‑yr CAGR 6.9 %) – a strong producer‑price signal. However, forward inflation expectations are subdued, limiting demand‑side pressure.  
+
+*Prefer*:  
+- **Industrial metals (copper, aluminum)** – supply‑constrained and tied to GDP growth; price upside 8‑12 % if real activity stays >4 % YoY.  
+- **Agricultural futures** – modest year‑on‑year demand growth, low correlation to rates.  
+
+*Avoid*:  
+- **Energy (crude oil)** – marked volatility and currently priced for modest demand; a dip in GDP growth or a stronger dollar would hurt.  
+
+**7. CASH & FX**  
+
+*Current scenario*: DXY at 120.08, flat YoY, with a slight QoQ rise (+0.88 %). The dollar is supported by higher short‑end yields (3M 3.87 %) and a muted Fed‑rate outlook.  
+
+*Prefer*:  
+- **Short‑dated USD money market (3M‑6M)** – offers ~4 % nominal yield with low credit risk; a good “cash‑efficiency” tool.  
+- **Emerging‑market short‑term debt** – still offers ~6‑7 % nominal yields, but watch for currency risk.  
+
+*Avoid*:  
+- **Long‑dated foreign sovereign bonds** – carry added duration risk as the 10Y‑3M spread is still positive, implying better US‑rate opportunities.  
+- **Currency carries into low‑rate currencies (JPY, CHF)** – expected real yields in those economies are lower, reducing carry advantage.  
+
+**8. PORTFOLIO MIX, SCENARIOS & ACTIONABLE STRATEGY**  
+
+| Investor type | Core allocation | Overlay (risk‑adjusted) | Rationale |
+|---------------|----------------|------------------------|-----------|
+| **Conservative** | 45 % Treasuries (2Y‑5Y), 25 % high‑quality dividend equities, 15 % cash (USD MM), 10 % TIPS, 5 % gold | Add 5 % short‑duration high‑yield bonds (BBB) only if spread >200 bps | Emphasis on income, low duration, real‑inflation hedge via TIPS; limited equity exposure to preserve capital. |
+| **Balanced** | 30 % Treasuries (2Y‑5Y), 30 % diversified equities (large‑cap quality + selective growth), 15 % TIPS, 10 % industrial metals, 10 % cash, 5 % gold | Tactical tilt to 5Y‑10Y corporate bonds if 10Y‑2Y spread >0.4 % (signalling room for risk) | Mix captures upside from real‑GDP growth while protecting against rate hikes via short‑duration bonds. |
+| **Aggressive** | 20 % Treasuries (short‑term), 45 % growth‑oriented equities (tech, cyclical), 15 % high‑yield corporates, 10 % commodities (base metals), 5 % crypto/alternatives, 5 % cash | Leverage via 2× 2Y‑5Y bond ETF if 2Y‑3M spread narrows <0.6 % (indicating lower near‑term rate risk) | Higher return target; relies on continued GDP momentum and modest inflation expectations to keep equity valuations reasonable. |
+
+**Base case (55 % probability)** – GDP growth stays near 4 % YoY, inflation expectations stay at 2.4‑2.5 % for 1‑2 yr, yields rise modestly (10‑20 bps) and the curve stays upright.  
+
+**Bull case (25 % probability)** – Fiscal consolidation and stronger consumer spending push GDP to 5 % YoY, real wages outpace CPI, allowing equities to rebound (S&P 500 +10‑12 % YTD) and long‑term yields to stay flat.  
+
+**Bear case (20 % probability)** – Unexpected shock to fiscal policy or a spike in energy prices drives CPI above 4 % YoY, forward EXINF rebounds >3 %, prompting a rapid uptick in 2Y‑5Y yields (30‑50 bps) and a flattening of the curve, hurting equities and raising credit spreads.  
+
+**9. THE HUMAN ANGLE (Wages, Real Earnings, & Consumer Expectations)**  
+
+- **Wage vs. Inflation**: Avg. hourly earnings rose +3.16 % YoY (CAGR 3.5 %). CPI is +3.90 % YoY – real earnings are **‑0.74 %** year‑over‑year, indicating a modest erosion of purchasing power.  
+
+- **Wage vs. Expectations**: 1‑yr EXINF 2.39 % is well below wage growth, meaning workers still expect price pressure to subside faster than their cash‑flow gains. This mismatch dampens consumer confidence and limits discretionary spend.  
+
+- **Unemployment**: Unemployment at 4.30 % (+20 bps YoY) is still above the “full‑employment” target (~4 %). Labor market slack supports modest wage bargaining power, but not enough to offset inflation fully.  
+
+- **Housing**: Mortgage rates implied by 10Y (4.63 %) and 30Y (5.13 %) yields translate to 30‑yr fixed rates ~5‑5.5 %. Housing inventory (10.30 mo supply) is expanding (+12 % QoQ) but remains tight, keeping price pressure modest. Higher rates are already curbing new‑home starts, which could worsen supply‑demand balance if rates climb further.  
+
+- **Consumer outlook**: With real wages slipping, households are likely to **tighten budgets**, favouring essential goods and price‑sensitive sectors. The falling forward inflation expectations suggest consumers anticipate a more benign price environment, reinforcing the shift toward savings (cash, short‑term USD) rather than high‑priced discretionary consumption.  
+
+---  
+
+*Bottom line*: The macro backdrop points to a **moderately tightening, inflation‑anchored environment**. Favor short‑to‑medium‑term Treasury exposure, quality dividend equities, and real‑inflation hedges (TIPS/Gold). Avoid long‑duration, high‑beta assets that are vulnerable to a modest rise in real yields or an unexpected inflation resurgence. Adjust portfolio tilt based on your risk tolerance and the probability‑weighted scenarios above.
+============================================================
+✅ 2026-07-23 01:01:53 | openai/gpt-oss-120b
